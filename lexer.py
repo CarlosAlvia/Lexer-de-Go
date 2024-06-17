@@ -5,7 +5,16 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 
 tokens = (
     'ID',
-    'BOOL'
+    'BOOL',
+    'PLUS',
+    'MINUS',
+    'TIMES',
+    'DIVIDE',
+    'LPAREN',
+    'RPAREN',
+    'MOD',
+    'DOSPUNTOS',
+    'IGUAL'
 )+tuple(reserved.values())
 
 # Expresiones regulares
@@ -22,3 +31,13 @@ def t_BOOL(t):
     else: 
         t.value = False
     return t
+
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_DIVIDE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_MOD = r'%'
+t_DOSPUNTOS = r':'
+t_IGUAL = r'='
