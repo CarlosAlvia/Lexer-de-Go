@@ -1,6 +1,5 @@
-import datetime
-import os
-import ply.lex as lex 
+import ply.lex as lex
+import logger 
 
 # Inicio aporte Carlos Alvia
 reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
@@ -85,30 +84,14 @@ var b string = "asdaskodasda
   asdasdasdasdad"
 '''
 
-def crear_logs(data, usuarioGit):
-    lexer.input(data)
-    tokens = []
-    while True:
+lexer.input(data)
+tokens = []
+while True:
         tok = lexer.token()
         if not tok:
             break  
         print(tok)
         tokens.append(tok)
 
-    if not os.path.exists('logs'):
-        os.makedirs('logs')
-
-    now = datetime.datetime.now()
-    fecha_hora = now.strftime("%d%m%Y-%Hh%M")
-
-    nombre_archivo = f'lexico-{usuarioGit}-{fecha_hora}.txt'
-    ruta_archivo = os.path.join('logs', nombre_archivo)
-
-    with open(ruta_archivo, 'w') as file:
-        for tok in tokens:
-            file.write(f'{tok}\n')
-
-    print(f'Log creado: {ruta_archivo}')
-
-usuarioGit = 'CarlosAlvia'
-crear_logs(data, usuarioGit)
+usuarioGit = 'Angello Bravo'
+logger.crear_logs(tokens, usuarioGit)
