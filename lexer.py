@@ -5,10 +5,10 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 
 tokens = (
     'ID',
-    'ENTERO',
-    'ENTERO_TYPE',
     'FLOTANTE64',
     'FLOTANTE64_TYPE',
+    'ENTERO',
+    'ENTERO_TYPE',
     'CADENA',
     'CADENA_TYPE',
     'BOOL',
@@ -58,14 +58,14 @@ def t_CADENA(t):
     t.value = str(t.value)
     return t
 
-def t_ENTERO(t):
-    r'^(-|\+)?\d{1,19}$'
-    t.value = int(t.value)
+def t_FLOTANTE64(t):
+    r'(-)?\d+(\.\d+)?([eE][+-]?\d+)?'
+    t.value = float(t.value)
     return t
 
-def t_FLOTANTE64(t):
-    r'^(-)?\d+(\.\d+)?([eE][+-]?\d+)?$'
-    t.value = float(t.value)
+def t_ENTERO(t):
+    r'(-|\+)?\d{1,19}'
+    t.value = int(t.value)
     return t
 
 def t_newline(t):
@@ -84,7 +84,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''var a int = 64
+data = '''var a int = -64.2e9
 var b string = "asdaskodasda
   asdasdasdasdad"'''
 
