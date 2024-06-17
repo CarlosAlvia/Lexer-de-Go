@@ -6,6 +6,8 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 tokens = (
     'ID',
     'ENTERO',
+    'CADENA',
+    'CADENA_TYPE',
     'ENTERO_TYPE',
     'FLOTANTE_TYPE',
     'FLOTANTE'
@@ -46,6 +48,12 @@ t_MOD = r'%'
 t_DOSPUNTOS = r':'
 t_IGUAL = r'='
 t_ENTERO_TYPE = r'int'
+t_CADENA_TYPE = r'string'
+
+def t_CADENA(t):
+    r'("[^"]*")|(\'[^\']*\')'
+    t.value = str(t.value)
+    return t
 
 def t_ENTERO(t):
     r'\d+'
