@@ -6,11 +6,11 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 tokens = (
     'ID',
     'ENTERO',
+    'ENTERO_TYPE',
+    'FLOTANTE64'
+    'FLOTANTE64_TYPE',
     'CADENA',
     'CADENA_TYPE',
-    'ENTERO_TYPE',
-    'FLOTANTE64_TYPE',
-    'FLOTANTE64'
     'BOOL',
     'PLUS',
     'MINUS',
@@ -25,6 +25,19 @@ tokens = (
 
 # Expresiones regulares
 
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_DIVIDE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_MOD = r'%'
+t_DOSPUNTOS = r':'
+t_IGUAL = r'='
+t_ENTERO_TYPE = r'int'
+t_CADENA_TYPE = r'string'
+t_FLOTANTE64_TYPE = r'float64'
+
 def t_ID(t):
     r'[_a-zA-Z]\w*'
     t.type = reserved.get(t.value,"ID")
@@ -38,23 +51,11 @@ def t_BOOL(t):
         t.value = False
     return t
 
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_MOD = r'%'
-t_DOSPUNTOS = r':'
-t_IGUAL = r'='
-t_ENTERO_TYPE = r'int'
-t_CADENA_TYPE = r'string'
-
 def t_CADENA(t):
     r'("[^"]*")|(\'[^\']*\')'
     t.value = str(t.value)
     return t
-t_FLOTANTE64_TYPE = r'float64'
+
 
 def t_ENTERO(t):
     r'^(-|\+)?\d{1,19}$'
