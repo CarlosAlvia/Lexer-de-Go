@@ -9,8 +9,8 @@ tokens = (
     'CADENA',
     'CADENA_TYPE',
     'ENTERO_TYPE',
-    'FLOTANTE_TYPE',
-    'FLOTANTE'
+    'FLOTANTE64_TYPE',
+    'FLOTANTE64'
     'BOOL',
     'PLUS',
     'MINUS',
@@ -54,14 +54,15 @@ def t_CADENA(t):
     r'("[^"]*")|(\'[^\']*\')'
     t.value = str(t.value)
     return t
+t_FLOTANTE64_TYPE = r'float64'
 
 def t_ENTERO(t):
-    r'\d+'
+    r'^(-|\+)?\d{1,19}$'
     t.value = int(t.value)
     return t
 
-def t_FLOTANTE(t):
-    r'(-?)(0|[1-9][0-9]*)?\.\d*'
+def t_FLOTANTE64(t):
+    r'^(-)?\d+(\.\d+)?([eE][+-]?\d+)?$'
     t.value = float(t.value)
     return t
 
