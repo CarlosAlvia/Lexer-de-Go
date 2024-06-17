@@ -10,6 +10,7 @@ tokens = (
     'CADENA_TYPE',
     'ENTERO_TYPE',
     'FLOTANTE_TYPE',
+    'BOOL_TYPE',
     'FLOTANTE'
     'BOOL',
     'PLUS',
@@ -49,9 +50,10 @@ t_DOSPUNTOS = r':'
 t_IGUAL = r'='
 t_ENTERO_TYPE = r'int'
 t_CADENA_TYPE = r'string'
+t_BOOL_TYPE = r'bool'
 
 def t_CADENA(t):
-    r'("[^"]*")|(\'[^\']*\')'
+    r'("[^"]*")|(`[^`]*`)'
     t.value = str(t.value)
     return t
 
@@ -77,9 +79,9 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''
-var a int = 64
-'''
+data = '''var a int = 64
+var b string = "asdaskodasda
+  asdasdasdasdad"'''
 
 # Give the lexer some input
 lexer.input(data)
