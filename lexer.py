@@ -5,6 +5,10 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 
 tokens = (
     'ID',
+    'ENTERO',
+    'ENTERO_TYPE',
+    'FLOTANTE_TYPE',
+    'FLOTANTE'
     'BOOL',
     'PLUS',
     'MINUS',
@@ -41,3 +45,41 @@ t_RPAREN = r'\)'
 t_MOD = r'%'
 t_DOSPUNTOS = r':'
 t_IGUAL = r'='
+t_ENTERO_TYPE = r'int'
+
+def t_ENTERO(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
+
+def t_FLOTANTE(t):
+    r'(-?)(0|[1-9][0-9]*)?\.\d*'
+    t.value = float(t.value)
+    return t
+
+t_ignore = ' \t'
+
+# Error handling rule
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
+
+
+# Build the lexer
+lexer = lex.lex()
+
+# Test it out
+data = '''
+var a int = 64
+'''
+
+# Give the lexer some input
+lexer.input(data)
+
+# Tokenize
+while True:
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)
+
