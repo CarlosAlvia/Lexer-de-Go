@@ -21,7 +21,23 @@ tokens = (
     'RPAREN',
     'MOD',
     'DOSPUNTOS',
-    'IGUAL'
+    'ASSIGN',
+    'EQUAL', #Inicio de los operadores de comparacion
+    'NOT_EQUAL',
+    'LESS_THAN',
+    'LESS_EQUAL',
+    'GREATER_THAN',
+    'GREATER_EQUAL',
+    'AND', #Inicio de los operadores lógicos
+    'OR',
+    'NOT',
+    'LBRACE', #Inicio de delimitadores {
+    'RBRACE', 
+    'LBRACKET',
+    'RBRACKET',
+    'COMMA',
+    'PUNTO',
+    'SEMICOLON'
 ) + tuple(ilegalType) +tuple(reserved.values())+tuple(dataTypes.values())
 
 # Expresiones regulares
@@ -33,7 +49,26 @@ t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_MOD = r'%'
 t_DOSPUNTOS = r':'
-t_IGUAL = r'='
+t_ASSIGN = r'='
+
+t_EQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_LESS_THAN = r'<'
+t_LESS_EQUAL = r'<='
+t_GREATER_THAN = r'>'
+t_GREATER_EQUAL = r'>='
+
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NOT = r'!'
+
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_COMMA = r','
+t_PUNTO = r'\.'
+t_SEMICOLON = r';'
 
 def t_BOOL(t):
     r'true|false'
@@ -86,8 +121,8 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-if ( x > 4 )
-for
+if ( !(x > 4) )
+for }
 var a int = -64.2e9
 var b string = "asdaskodasda
   asdasdasdasdad break" 
