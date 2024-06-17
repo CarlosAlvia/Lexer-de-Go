@@ -5,6 +5,8 @@ import logger
 reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
 dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE"}
 
+ilegalType = 'ILLEGAL'
+
 tokens = (
     'FLOTANTE64',
     'ENTERO',
@@ -20,7 +22,7 @@ tokens = (
     'MOD',
     'DOSPUNTOS',
     'IGUAL'
-)+tuple(reserved.values())+tuple(dataTypes.values())
+) + tuple(ilegalType) +tuple(reserved.values())+tuple(dataTypes.values())
 
 # Expresiones regulares
 t_PLUS = r'\+'
@@ -70,7 +72,14 @@ def t_newline(t):
 t_ignore = ' \t'
 
 def t_error(t):
+    global tokensList
     print("Illegal character '%s'" % t.value[0])
+    illegal_tok = lex.LexToken()
+    illegal_tok.type = 'ILLEGAL'
+    illegal_tok.value = t.value[0]
+    illegal_tok.lineno = t.lineno
+    illegal_tok.lexpos = t.lexpos
+    tokensList.append(illegal_tok)
     t.lexer.skip(1)
 
 
@@ -81,17 +90,19 @@ if ( x > 4 )
 for
 var a int = -64.2e9
 var b string = "asdaskodasda
-  asdasdasdasdad"
+  asdasdasdasdad break" 
 '''
 
 lexer.input(data)
-tokens = []
+tokensList = []
 while True:
         tok = lexer.token()
         if not tok:
             break  
         print(tok)
-        tokens.append(tok)
+        tokensList.append(tok)
+
+        
 
 usuarioGit = 'Angello Bravo'
-logger.crear_logs(tokens, usuarioGit)
+logger.crear_logs(tokensList, usuarioGit)
