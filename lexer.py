@@ -6,13 +6,13 @@ reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface
 tokens = (
     'ID',
     'ENTERO',
+    'ENTERO_TYPE',
+    'FLOTANTE64',
+    'FLOTANTE64_TYPE',
     'CADENA',
     'CADENA_TYPE',
-    'ENTERO_TYPE',
-    'FLOTANTE_TYPE',
-    'BOOL_TYPE',
-    'FLOTANTE'
     'BOOL',
+    'BOOL_TYPE',
     'PLUS',
     'MINUS',
     'TIMES',
@@ -25,6 +25,20 @@ tokens = (
 )+tuple(reserved.values())
 
 # Expresiones regulares
+
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_DIVIDE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_MOD = r'%'
+t_DOSPUNTOS = r':'
+t_IGUAL = r'='
+t_ENTERO_TYPE = r'int'
+t_CADENA_TYPE = r'string'
+t_FLOTANTE64_TYPE = r'float64'
+t_BOOL_TYPE = r'bool'
 
 def t_ID(t):
     r'[_a-zA-Z]\w*'
@@ -39,33 +53,24 @@ def t_BOOL(t):
         t.value = False
     return t
 
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_MOD = r'%'
-t_DOSPUNTOS = r':'
-t_IGUAL = r'='
-t_ENTERO_TYPE = r'int'
-t_CADENA_TYPE = r'string'
-t_BOOL_TYPE = r'bool'
-
 def t_CADENA(t):
     r'("[^"]*")|(`[^`]*`)'
     t.value = str(t.value)
     return t
 
 def t_ENTERO(t):
-    r'\d+'
+    r'^(-|\+)?\d{1,19}$'
     t.value = int(t.value)
     return t
 
-def t_FLOTANTE(t):
-    r'(-?)(0|[1-9][0-9]*)?\.\d*'
+def t_FLOTANTE64(t):
+    r'^(-)?\d+(\.\d+)?([eE][+-]?\d+)?$'
     t.value = float(t.value)
     return t
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 t_ignore = ' \t'
 
