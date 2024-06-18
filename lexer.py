@@ -1,7 +1,7 @@
 import ply.lex as lex
 import logger 
 
-# Inicio aporte Carlos Alvia
+
 reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
 dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE",
              'complex64': 'COMPLEX64_TYPE'}
@@ -158,7 +158,27 @@ if  entero >= 2 && z != 2.65 {
 }
 '''
 
-data = algoritmoAngello
+algoritmoCarlos = '''
+
+func algoritmo(){
+    var entero int = (450  * 2 - 200 + 23) / (20%3)
+    var complejo complex64 = 2+12i
+    var condicion bool =  !(entero > 2 && entero >= 400 || entero <= 2000)
+    var condicion2 = entero != 40 && entero < 50000 
+    const verdadero bool = true
+    mensajes := [2]string{"Algoritmo", "Random"}
+    var flotante float64 = 23.92;  
+    p := Persona{ Nombre: "Juan", Edad: 30, } 
+    nombre := p.Nombre
+    if v := 4.12; condicion && condicion2 || !verdadero {
+        flotante = flotante - v
+        nombre = nombre + mensajes[1]
+        complejo = complejo + 2i // Suma complejos 
+    }
+}
+'''
+
+data = algoritmoCarlos
 
 lexer.input(data)
 tokensList = []
@@ -171,5 +191,5 @@ while True:
 
         
 
-usuarioGit = 'Angello Bravo'
+usuarioGit = 'CarlosAlvia'
 logger.crear_logs(tokensList, usuarioGit)
