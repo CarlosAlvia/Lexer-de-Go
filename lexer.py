@@ -144,7 +144,7 @@ var complejo complex64 = 2.5+12i
 var x int [] = [2,3,4]
 var z float64 = 2.65
 var entero int = 2
-if  enteri >= 2 && {
+if  entero >= 2 && z != 2.65 {
     var texto string = "Hola Mundo"
     for i := 0; i < 5; i++{
         entero += i * z / 3
