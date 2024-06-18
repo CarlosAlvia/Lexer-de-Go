@@ -1,4 +1,4 @@
-LexToken(ID,'func',3,2)
+LexToken(FUNC,'func',3,2)
 LexToken(ID,'algoritmo',3,7)
 LexToken(LPAREN,'(',3,16)
 LexToken(RPAREN,')',3,17)

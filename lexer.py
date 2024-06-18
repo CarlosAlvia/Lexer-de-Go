@@ -205,7 +205,7 @@ func main() {
 }
 '''
 
-data = algoritmoSofiaZarate
+data = algoritmoCarlos
 
 lexer.input(data)
 tokensList = []
@@ -218,5 +218,5 @@ while True:
 
         
 
-usuarioGit = 'SofiaZarate'
+usuarioGit = 'Carlos Alvia'
 logger.crear_logs(tokensList, usuarioGit)
