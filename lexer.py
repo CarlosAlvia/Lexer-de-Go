@@ -141,21 +141,25 @@ package main
 import "fmt"
 
 var complejo complex64 = 2.5+12i
-var x int [] = [2,3,4]
+var arreglo = []int{1, 2, 3}
 var z float64 = 2.65
 var entero int = 2
-if  entero >= 2 && z != 2.65 {
-    var texto string = "Hola Mundo"
-    for i := 0; i < 5; i++{
-        entero += i * z / 3
-    }
 
-    if z > 20{
+func main(){
+    if  entero >= 2 || z != 2.66 {
+        var texto string = "Hola Mundo"
+        for i := 0; i < 5; i++{
+            entero += i * z / 3
+        }
+        if z > 20 && z <= 30 {
         return texto;
-    }else{
-        return entero
+        }else{
+            return entero
+        }
     }
 }
+
+
 '''
 
 algoritmoCarlos = '''
@@ -205,7 +209,7 @@ func main() {
 }
 '''
 
-data = algoritmoCarlos
+data = algoritmoAngello
 
 lexer.input(data)
 tokensList = []
@@ -218,5 +222,5 @@ while True:
 
         
 
-usuarioGit = 'Carlos Alvia'
+usuarioGit = 'Angello Bravo'
 logger.crear_logs(tokensList, usuarioGit)
