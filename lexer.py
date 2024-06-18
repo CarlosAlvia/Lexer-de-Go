@@ -3,12 +3,15 @@ import logger
 
 # Inicio aporte Carlos Alvia
 reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
-dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE"}
+dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE",
+             'complex64': 'COMPLEX64_TYPE'}
 
-ilegalType = 'ILLEGAL'
+#Este token tiene la unica finalidad de agregar los errores en la lista que usa el Logger para escribir los Logs
+ilegalType = ('ILLEGAL',)
 
 tokens = (
     'FLOTANTE64',
+    'COMPLEX64',
     'ENTERO',
     'CADENA',
     'BOOL',
@@ -37,8 +40,9 @@ tokens = (
     'RBRACKET',
     'COMMA',
     'PUNTO',
-    'SEMICOLON'
-) + tuple(ilegalType) +tuple(reserved.values())+tuple(dataTypes.values())
+    'SEMICOLON',
+    'COMMENT',
+) + ilegalType + tuple(reserved.values())+tuple(dataTypes.values())
 
 # Expresiones regulares
 t_PLUS = r'\+'
@@ -83,6 +87,11 @@ def t_CADENA(t):
     t.value = str(t.value)
     return t
 
+
+def t_COMPLEX64(t):
+    r'((-)?\d+(\.(\d+)?([eE][+-]?\d+)?)?(-|\+))?(\d+i|\d*\.(\d+)?([eE][+-]?\d+)?i)'
+    return t
+
 def t_FLOTANTE64(t):
     r'(-)?\d+\.(\d+)?([eE][+-]?\d+)?'
     t.value = float(t.value)
@@ -104,6 +113,10 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+def t_COMMENT(t):
+    r'//.*|/\*[\s\S]*?\*/'
+    pass  # Para ignorar los comentarios
+
 t_ignore = ' \t'
 
 def t_error(t):
@@ -120,13 +133,32 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = '''
-if ( !(x > 4) )
-for }
-var a int = -64.2e9
-var b string = "asdaskodasda
-  asdasdasdasdad break" 
+algoritmoAngello = '''
+//Esto es un comentario
+/*Esto tambien es un comentario*/
+
+package main
+import "fmt"
+
+var complejo complex64 = 2.5+12i
+var x int [] = [2,3,4]
+var z float64 = 2.65
+var entero int = 2
+if  enteri >= 2 && {
+    var texto string = "Hola Mundo"
+    for i := 0; i < 5; i++{
+        entero += i * z / 3
+    }
+
+    if z > 20{
+        return texto;
+    }else{
+        return entero
+    }
+}
 '''
+
+data = algoritmoAngello
 
 lexer.input(data)
 tokensList = []
