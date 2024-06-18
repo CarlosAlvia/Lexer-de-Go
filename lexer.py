@@ -2,7 +2,7 @@ import ply.lex as lex
 import logger 
 
 
-reserved = {"break": "BREAK", "default": "DEFAULT", "funct": "FUNCT", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
+reserved = {"break": "BREAK", "default": "DEFAULT", "func": "FUNC", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
 dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE",
              'complex64': 'COMPLEX64_TYPE'}
 
@@ -98,7 +98,7 @@ def t_FLOTANTE64(t):
     return t
 
 def t_ENTERO(t):
-    r'(-|\+)?\d{1,19}'
+    r'(-|\+)?\d+'
     t.value = int(t.value)
     return t
 
@@ -178,7 +178,34 @@ func algoritmo(){
 }
 '''
 
-data = algoritmoCarlos
+algoritmoSofiaZarate = '''
+package main
+
+import "fmt"
+
+// Variables globales
+var complejo complex64 = 4.7+6.2i
+var arreglo = []int{10, 20, 30}
+var flotante float64 = 8.15
+var entero int = 11
+
+func main() {
+    if entero > 10 || flotante == 1.23 {
+        var cadena string = "Hola Soledad"
+        for i := 0; i < 2; i++ {
+            entero += i * int(flotante) / 2
+        }
+
+        if flotante <= 5 {
+            fmt.Println(cadena)
+        } else {
+            fmt.Println(entero, complejo)
+        }
+    }
+}
+'''
+
+data = algoritmoSofiaZarate
 
 lexer.input(data)
 tokensList = []
@@ -191,5 +218,5 @@ while True:
 
         
 
-usuarioGit = 'CarlosAlvia'
+usuarioGit = 'SofiaZarate'
 logger.crear_logs(tokensList, usuarioGit)
