@@ -3,17 +3,17 @@ import logger
 
 
 reserved = {"break": "BREAK", "default": "DEFAULT", "func": "FUNC", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
-dataTypes = {"float64": "FLOTANTE64_TYPE", "int": "ENTERO_TYPE", "string": "CADENA_TYPE", "bool": "BOOL_TYPE",
+dataTypes = {"float64": "FLOAT64_TYPE", "int": "INT_TYPE", "string": "STRING_TYPE", "bool": "BOOL_TYPE",
              'complex64': 'COMPLEX64_TYPE'}
 
 #Este token tiene la unica finalidad de agregar los errores en la lista que usa el Logger para escribir los Logs
 ilegalType = ('ILLEGAL',)
 
 tokens = (
-    'FLOTANTE64',
+    'FLOAT64',
     'COMPLEX64',
-    'ENTERO',
-    'CADENA',
+    'INT',
+    'STRING',
     'BOOL',
     'ID',
     'PLUS',
@@ -82,7 +82,7 @@ def t_BOOL(t):
         t.value = False
     return t
 
-def t_CADENA(t):
+def t_STRING(t):
     r'("[^"]*")|(`[^`]*`)'
     t.value = str(t.value)
     return t
@@ -92,12 +92,12 @@ def t_COMPLEX64(t):
     r'((-)?\d+(\.(\d+)?([eE][+-]?\d+)?)?(-|\+))?(\d+i|\d*\.(\d+)?([eE][+-]?\d+)?i)'
     return t
 
-def t_FLOTANTE64(t):
+def t_FLOAT64(t):
     r'(-)?\d+\.(\d+)?([eE][+-]?\d+)?'
     t.value = float(t.value)
     return t
 
-def t_ENTERO(t):
+def t_INT(t):
     r'(-|\+)?\d+'
     t.value = int(t.value)
     return t
