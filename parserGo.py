@@ -5,7 +5,8 @@ from lexer import tokens
 def p_codigo(p):
     '''codigo : asignacion
               | sentenciaSwitch
-              | funcion'''#TODO
+              | funcion
+              | imprimir'''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -146,6 +147,12 @@ def p_empty(p): #Carlos Alvia
     'empty :'
     pass
 
+#Impresión con cero, uno o más argumentos Sofia Zarate
+def p_imprimir(p):
+    '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN
+                | FMT PUNTO PRINT_LN LPAREN RPAREN'''
+
+
 # Error rule for syntax errors
 def p_error(p):
     if p:
@@ -167,4 +174,4 @@ while True:
    result = parser.parse(s)
    print(result)
 
-logger.crear_logs(sintax_errors, "AngelloBravo", 1)
+logger.crear_logs(sintax_errors, "Sofia Zarate", 1)

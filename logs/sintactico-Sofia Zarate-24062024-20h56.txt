@@ -1,0 +1,1 @@
+Error de sintaxis en 'LexToken(STRING_TYPE,'string',28,12)'
