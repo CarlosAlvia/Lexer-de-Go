@@ -71,11 +71,16 @@ def p_bloqueCasosSwitch(p): #Carlos Alvia
 def p_casoSwitch(p): #Carlos Alvia
     '''casoSwitch : CASE valores DOSPUNTOS subcodigo'''
 
+#def p_for(p): #Angello Bravo
+#    'for : asignacionCorta '
+
 #ESTRUCTURAS DE DATOS
 
 def p_estructurasDeDatos(p): #Carlos Alvia
     '''estructurasDeDatos : mapa
-                        | array'''
+                        | array
+                        | slice
+                        '''
 #MAPA
 def p_definicionMapaVacio(p): #Carlos Alvia 
     '''mapa : MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
@@ -94,6 +99,14 @@ def p_elementoMapa(p): #Carlos Alvia
 #ARRAY Sofia Zarate
 def p_arrayVacio(p):
     'array : LBRACKET INT RBRACKET tipoDato'
+
+# SLICE Angello Bravo
+def p_slice(p):
+    'slice : ID LBRACKET valor DOSPUNTOS valor RBRACKET ' 
+
+def p_sliceArray(p):
+    'slice : LBRACKET RBRACKET tipoDato LBRACE valores RBRACE'
+
 
 #DEFINICIÓN DE VARIABLES
 def p_asignacionTipo(p): #Carlos Alvia
@@ -198,4 +211,4 @@ while True:
    result = parser.parse(s)
    print(result)
 
-logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
+logger.crear_logs(sintax_errors, "Angello Bravo", 1)

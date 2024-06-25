@@ -1,0 +1,4 @@
+Error de sintaxis en 'LexToken(LBRACKET,'[',28,0)'
+Error de sintaxis en 'LexToken(POINTER,'&',28,0)'
+Error de sintaxis en 'LexToken(LBRACKET,'[',28,0)'
+Error de sintaxis en 'LexToken(LBRACKET,'[',28,0)'
