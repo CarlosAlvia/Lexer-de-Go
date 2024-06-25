@@ -49,6 +49,16 @@ def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o 
                   | asignacion
                   | imprimir
                   | solicitudDatos
+                  | sentenciaSwitch
+                  | funcion
+                  | funcionSinArg
+                  | funcionAnonima
+                  | mapa
+                  | array
+                  | sentenciaIf
+                  | slice
+                  | for
+                  | expresionAritmetica
                   ''' #TODO
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
