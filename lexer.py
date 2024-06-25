@@ -5,7 +5,7 @@ import logger
 reserved = {"break": "BREAK", "default": "DEFAULT", "func": "FUNC", "Interface": "INTERFACE", "select": "SELECT", "case": "CASE", "defer": "DEFER", "go": "GO", "map": "MAP", "struct": "STRUCT", "chan": "CHAN", "else": "ELSE", "goto": "GOTO", "package": "PACKAGE", "switch": "SWITCH", "const": "CONST", "fallthrough": "FALLTHROUGH", "if": "IF", "range": "RANGE", "type": "TYPE", "continue": "CONTINUE", "for": "FOR", "import": "IMPORT", "return": "RETURN", "var": "VAR"}
 dataTypes = {"float64": "FLOAT64_TYPE", "int": "INT_TYPE", "string": "STRING_TYPE", "bool": "BOOL_TYPE",
              "complex64": "COMPLEX64_TYPE"}
-standardFunctions = {"fmt": "FMT", "Println": "PRINT_LN"}
+standardFunctions = {"fmt": "FMT", "Println": "PRINT_LN", "Scanln":"SCANLN"}
 #Este token tiene la unica finalidad de agregar los errores en la lista que usa el Logger para escribir los Logs
 ilegalType = ('ILLEGAL',)
 
@@ -42,6 +42,7 @@ tokens = (
     'PUNTO',
     'SEMICOLON',
     'COMMENT',
+    'POINTER',
 ) + ilegalType + tuple(reserved.values())+tuple(dataTypes.values())+tuple(standardFunctions.values())
 
 # Expresiones regulares
@@ -73,6 +74,7 @@ t_RBRACKET = r'\]'
 t_COMMA = r','
 t_PUNTO = r'\.'
 t_SEMICOLON = r';'
+t_POINTER = r'&'
 
 def t_BOOL(t):
     r'true|false'

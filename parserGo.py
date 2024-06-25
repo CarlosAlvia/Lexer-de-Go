@@ -7,7 +7,9 @@ def p_codigo(p):
               | sentenciaSwitch
               | funcion
               | funcionAnonima
-              | imprimir'''#TODO
+              | imprimir
+              | solicitudDatos
+              '''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -159,6 +161,9 @@ def p_imprimir(p):
     '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN
                 | FMT PUNTO PRINT_LN LPAREN RPAREN'''
 
+# Solicitar datos por teclado Angello Bravo
+def p_solicitud_datos(p): 
+    'solicitudDatos : FMT PUNTO SCANLN LPAREN POINTER ID RPAREN'
 
 # Error rule for syntax errors
 def p_error(p):
