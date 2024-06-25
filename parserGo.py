@@ -11,7 +11,8 @@ def p_codigo(p):
               | imprimir
               | mapa
               | array
-              | solicitudDatos''' #TODO
+              | solicitudDatos
+              | sentenciaIf''' #TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -42,7 +43,8 @@ def p_funcion_anonima_variadico(p): #Angello Bravo
 #ESTRUCTURAS DE CONTROL
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''subcodigo : asignacionCorta
-                  | asignacion''' #TODO
+                  | asignacion
+                  | imprimir''' #TODO
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
     '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
@@ -71,6 +73,12 @@ def p_bloqueCasosSwitch(p): #Carlos Alvia
 
 def p_casoSwitch(p): #Carlos Alvia
     '''casoSwitch : CASE valores DOSPUNTOS subcodigo'''
+
+#IF -Sofia Zarate
+def p_sentenciaIfClasica(p):
+    '''sentenciaIf : IF condiciones LBRACE RBRACE
+                    | IF condiciones LBRACE subcodigo RBRACE 
+                    | IF asignacionCorta SEMICOLON condiciones LBRACE subcodigo RBRACE'''
 
 #ESTRUCTURAS DE DATOS
 
