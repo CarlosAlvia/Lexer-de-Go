@@ -2,53 +2,57 @@ import ply.yacc as yacc
 from lexer import tokens
 
 def p_codigo(p):
-    '''codigo : '''#TODO
+    '''codigo : asignacion
+              | sentenciaSwitch
+              | funcion'''#TODO
 
 #TIPOS DE FUNCION
-def funcion(p): #con argumentos o variádica #Carlos Alvia
+def p_funcion(p): #con argumentos o variádica #Carlos Alvia
     'funcion : FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE'
 
-def argumentos(p): #Carlos Alvia
+def p_argumentos(p): #Carlos Alvia
     '''argumentos : argumento
                   | argumentoVariadico
-                  | argumento COMMMA
+                  | argumento COMMA
                   | argumentoVariadico COMMA'''
 
-def argumento(p): #Carlos Alvia
-    'argumentoVariadico : ID tipoDato '
-def argumentoVariadico(p):
+def p_argumento(p): #Carlos Alvia
+    'argumento : ID tipoDato '
+
+def p_argumentoVariadico(p):
     'argumentoVariadico : ID PUNTO PUNTO PUNTO tipoDato '
     
 #ESTRUCTURAS DE CONTROL
-def subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
-     '''subcodigo : ''' #TODO
+def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
+     '''subcodigo : asignacionCorta
+                  | asignacion''' #TODO
 
-def sentenciaSwitchClasica(p): #Carlos Alvia
-    '''sentenciaSwitch: SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
+def p_sentenciaSwitchClasica(p): #Carlos Alvia
+    '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
 
-def switchConDefinicionDeVariable(p): #Carlos Alvia
+def p_switchConDefinicionDeVariable(p): #Carlos Alvia
     'sentenciaSwitch : SWITCH asignacionCorta SEMICOLON ID LBRACE bloqueCasosSwitch casoDefault RBRACE'
 
-def switchNoCondicion(p): #Carlos Alvia
+def p_switchNoCondicion(p): #Carlos Alvia
     'sentenciaSwitch : SWITCH LBRACE bloqueCasosBooleanos casoDefault RBRACE'
 
-def bloqueCasosBooleanos(p): #Carlos Alvia
+def p_bloqueCasosBooleanos(p): #Carlos Alvia
     '''bloqueCasosBooleanos : casoBooleano
-                              casoBooleano bloqueCasosBooleanos'''
+                            | casoBooleano bloqueCasosBooleanos'''
 
-def casoBooleano(p): #Carlos Alvia
-    '''casosBooleanos : CASE condiciones DOSPUNTOS subcodigo
-                        CASE ID DOSPUNTOS subcodigo'''
+def p_casoBooleano(p): #Carlos Alvia
+    '''casoBooleano : CASE condiciones DOSPUNTOS subcodigo
+                      | CASE ID DOSPUNTOS subcodigo'''
 
-def casoDefault(p): #Carlos Alvia
+def p_casoDefault(p): #Carlos Alvia
     '''casoDefault : DEFAULT DOSPUNTOS subcodigo
                    | empty'''
 
-def bloqueCasosSwitch(p): #Carlos Alvia
+def p_bloqueCasosSwitch(p): #Carlos Alvia
     '''bloqueCasosSwitch : casoSwitch
                          | casoSwitch bloqueCasosSwitch'''
 
-def casoSwitch(p): #Carlos Alvia
+def p_casoSwitch(p): #Carlos Alvia
     '''casoSwitch : CASE valores DOSPUNTOS subcodigo'''
 
 #ESTRUCTURAS DE DATOS
@@ -130,7 +134,7 @@ def p_condicion(p): #Carlos Alvia
     '''condicion : valor operadorComp valor
                  | BOOL'''
 
-def operadorComparacion(p): #Carlos Alvia
+def p_operadorComparacion(p): #Carlos Alvia
     '''operadorComp : NOT_EQUAL
                     | LESS_THAN
                     | LESS_EQUAL
