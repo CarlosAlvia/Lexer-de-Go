@@ -1,0 +1,2 @@
+Error de sintaxis en 'LexToken(INT,2,28,18)'
+Error de sintaxis en 'LexToken(RBRACE,'}',28,41)'

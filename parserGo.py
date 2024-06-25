@@ -12,7 +12,10 @@ def p_codigo(p):
               | mapa
               | array
               | solicitudDatos
-              | sentenciaIf''' #TODO
+              | sentenciaIf
+              | slice
+              | for
+              | expresionAritmetica''' #TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -44,7 +47,9 @@ def p_funcion_anonima_variadico(p): #Angello Bravo
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''subcodigo : asignacionCorta
                   | asignacion
-                  | imprimir''' #TODO
+                  | imprimir
+                  | solicitudDatos
+                  ''' #TODO
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
     '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
@@ -79,12 +84,22 @@ def p_sentenciaIfClasica(p):
     '''sentenciaIf : IF condiciones LBRACE RBRACE
                     | IF condiciones LBRACE subcodigo RBRACE 
                     | IF asignacionCorta SEMICOLON condiciones LBRACE subcodigo RBRACE'''
+def p_for(p): #Angello Bravo
+    'for : FOR asignacionCorta SEMICOLON condiciones SEMICOLON autooperacion LBRACE subcodigo RBRACE'
+
+def p_forCondicion(p): #Angello Bravo
+    'for : FOR condiciones LBRACE subcodigo RBRACE'
+
+def p_forInfinito(p): #Angello Bravo
+    'for : FOR LBRACE subcodigo RBRACE'
 
 #ESTRUCTURAS DE DATOS
 
 def p_estructurasDeDatos(p): #Carlos Alvia
     '''estructurasDeDatos : mapa
-                        | array'''
+                        | array
+                        | slice
+                        '''
 #MAPA
 def p_definicionMapaVacio(p): #Carlos Alvia 
     '''mapa : MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
@@ -112,6 +127,14 @@ def p_elementosArray(p):
     '''elementosArray : valor
                         | valor COMMA elementosArray'''
 
+# SLICE Angello Bravo
+def p_slice(p):
+    'slice : ID LBRACKET valor DOSPUNTOS valor RBRACKET ' 
+
+def p_sliceArray(p):
+    'slice : LBRACKET RBRACKET tipoDato LBRACE valores RBRACE'
+
+
 #DEFINICIÓN DE VARIABLES
 def p_asignacionTipo(p): #Carlos Alvia
     'asignacion : VAR ID tipoDato ASSIGN valor'
@@ -121,6 +144,17 @@ def p_asignacionInferencia(p): #Carlos Alvia
 
 def p_asignacionCorta(p): #Carlos Alvia
     'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
+
+def p_autoincremento(p): #Angello Bravo
+    'autoincremento : ID PLUS PLUS'
+
+def p_autodecremento(p): #Angello Bravo
+    'autodecremento : ID MINUS MINUS'
+
+def p_autooperacion(p): #Angello Bravo
+    '''autooperacion : autoincremento
+                        | autodecremento
+                        '''
 
 def p_tipoDato(p): #Carlos Alvia 
     '''tipoDato : FLOAT64_TYPE
@@ -215,4 +249,4 @@ while True:
    result = parser.parse(s)
    print(result)
 
-logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
+logger.crear_logs(sintax_errors, "Angello Bravo", 1)
