@@ -1,0 +1,1 @@
+Error de sintaxis en 'LexToken(ASSIGN,'=',28,21)'

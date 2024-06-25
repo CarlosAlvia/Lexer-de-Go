@@ -1,8 +1,14 @@
 import ply.yacc as yacc
+import logger
 from lexer import tokens
 
 def p_codigo(p):
-    '''codigo : funcion'''#TODO
+    '''codigo : asignacion
+              | sentenciaSwitch
+              | funcion
+              | funcionSinArg
+              | funcionAnonima
+              | imprimir'''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -20,6 +26,16 @@ def p_argumento(p): #Carlos Alvia
 def p_argumentoVariadico(p):
     'argumentoVariadico : ID PUNTO PUNTO PUNTO tipoDato '
     
+#FUNCION SIN ARGUMENTOS 
+def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
+    'funcionSinArg : FUNC ID LPAREN RPAREN LBRACE subcodigo RBRACE'
+
+def p_funcion_anonima(p):  #Angello Bravo
+    '''funcionAnonima : FUNC LPAREN RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'''
+
+def p_funcion_anonima_variadico(p): #Angello Bravo
+    'funcionAnonima : FUNC LPAREN argumentos RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'
+
 #ESTRUCTURAS DE CONTROL
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''subcodigo : asignacionCorta
@@ -73,13 +89,13 @@ def p_elementoMapa(p): #Carlos Alvia
     '''elementoMapa : valor DOSPUNTOS valor COMMA'''
 
 #DEFINICIÓN DE VARIABLES
-def p_asignacionTipo(p): #Carlos Alvia 
+def p_asignacionTipo(p): #Carlos Alvia
     'asignacion : VAR ID tipoDato ASSIGN valor'
 
-def p_asignacionInferencia(p): #Carlos Alvia 
+def p_asignacionInferencia(p): #Carlos Alvia
     'asignacion : VAR ID ASSIGN valor'
 
-def p_asignacionCorta(p): #Carlos Alvia 
+def p_asignacionCorta(p): #Carlos Alvia
     'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
 
 def p_tipoDato(p): #Carlos Alvia 
@@ -145,14 +161,23 @@ def p_empty(p): #Carlos Alvia
     'empty :'
     pass
 
+#Impresión con cero, uno o más argumentos Sofia Zarate
+def p_imprimir(p):
+    '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN
+                | FMT PUNTO PRINT_LN LPAREN RPAREN'''
+
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
-    print(p.value)
+    if p:
+        error_message = f"Error de sintaxis en '{p}'"
+    else:
+        error_message = "Error de sintaxis al final del archivo"
+    sintax_errors.append(error_message)
+    print(error_message)
 
 # Build the parser
 parser = yacc.yacc()
-
+sintax_errors = []
 while True:
    try:
        s = input('lp > ')
@@ -161,3 +186,5 @@ while True:
    if not s: continue
    result = parser.parse(s)
    print(result)
+
+logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
