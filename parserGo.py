@@ -72,7 +72,8 @@ def p_casoSwitch(p): #Carlos Alvia
 #ESTRUCTURAS DE DATOS
 
 def p_estructurasDeDatos(p): #Carlos Alvia
-    '''estructurasDeDatos : mapa'''
+    '''estructurasDeDatos : mapa
+                        | array'''
 #MAPA
 def p_definicionMapaVacio(p): #Carlos Alvia
     'mapa : MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE'
@@ -86,6 +87,10 @@ def p_elementosMapa(p): #Carlos Alvia
 
 def p_elementoMapa(p): #Carlos Alvia
     '''elementoMapa : valor DOSPUNTOS valor COMMA'''
+
+#ARRAY Sofia Zarate
+def p_arrayVacio(p):
+    'array : LBRACKET INT RBRACKET tipoDato'
 
 #DEFINICIÓN DE VARIABLES
 def p_asignacionTipo(p): #Carlos Alvia
