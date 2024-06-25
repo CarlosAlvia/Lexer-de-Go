@@ -8,7 +8,9 @@ def p_codigo(p):
               | funcion
               | funcionSinArg
               | funcionAnonima
-              | imprimir'''#TODO
+              | imprimir
+              | mapa
+              | array'''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -91,7 +93,15 @@ def p_elementoMapa(p): #Carlos Alvia
 
 #ARRAY Sofia Zarate
 def p_arrayVacio(p):
-    'array : LBRACKET INT RBRACKET tipoDato'
+    '''array : LBRACKET INT RBRACKET tipoDato
+            | LBRACKET INT RBRACKET tipoDato LBRACE RBRACE'''
+
+def p_arrayConElementos(p):
+    'array : LBRACKET INT RBRACKET tipoDato LBRACE elementosArray RBRACE'
+
+def p_elementosArray(p):
+    '''elementosArray : valor
+                        | valor COMMA elementosArray'''
 
 #DEFINICIÓN DE VARIABLES
 def p_asignacionTipo(p): #Carlos Alvia
