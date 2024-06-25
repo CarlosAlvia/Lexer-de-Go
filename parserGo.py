@@ -6,8 +6,9 @@ def p_codigo(p):
     '''codigo : asignacion
               | sentenciaSwitch
               | funcion
-              | imprimir
-              | funcionSinArg'''#TODO
+              | funcionSinArg
+              | funcionAnonima
+              | imprimir'''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -28,6 +29,12 @@ def p_argumentoVariadico(p):
 #FUNCION SIN ARGUMENTOS 
 def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
     'funcionSinArg : FUNC ID LPAREN RPAREN LBRACE subcodigo RBRACE'
+
+def p_funcion_anonima(p):  #Angello Bravo
+    '''funcionAnonima : FUNC LPAREN RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'''
+
+def p_funcion_anonima_variadico(p): #Angello Bravo
+    'funcionAnonima : FUNC LPAREN argumentos RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'
 
 #ESTRUCTURAS DE CONTROL
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
