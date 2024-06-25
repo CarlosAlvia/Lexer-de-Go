@@ -1,0 +1,2471 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BREAK
+    CHAN
+    COMMENT
+    CONST
+    CONTINUE
+    DEFER
+    ELSE
+    FALLTHROUGH
+    FOR
+    GO
+    GOTO
+    IF
+    ILLEGAL
+    IMPORT
+    INTERFACE
+    NOT
+    PACKAGE
+    RANGE
+    RETURN
+    SELECT
+    STRUCT
+    TYPE
+
+Grammar
+
+Rule 0     S' -> codigo
+Rule 1     codigo -> funcion
+Rule 2     funcion -> FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE
+Rule 3     argumentos -> argumento
+Rule 4     argumentos -> argumentoVariadico
+Rule 5     argumentos -> argumento COMMA argumentos
+Rule 6     argumentos -> argumentoVariadico COMMA argumentos
+Rule 7     argumento -> ID tipoDato
+Rule 8     argumentoVariadico -> ID PUNTO PUNTO PUNTO tipoDato
+Rule 9     subcodigo -> asignacionCorta
+Rule 10    subcodigo -> asignacion
+Rule 11    sentenciaSwitch -> SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE
+Rule 12    sentenciaSwitch -> SWITCH asignacionCorta SEMICOLON ID LBRACE bloqueCasosSwitch casoDefault RBRACE
+Rule 13    sentenciaSwitch -> SWITCH LBRACE bloqueCasosBooleanos casoDefault RBRACE
+Rule 14    bloqueCasosBooleanos -> casoBooleano
+Rule 15    bloqueCasosBooleanos -> casoBooleano bloqueCasosBooleanos
+Rule 16    casoBooleano -> CASE condiciones DOSPUNTOS subcodigo
+Rule 17    casoBooleano -> CASE ID DOSPUNTOS subcodigo
+Rule 18    casoDefault -> DEFAULT DOSPUNTOS subcodigo
+Rule 19    casoDefault -> empty
+Rule 20    bloqueCasosSwitch -> casoSwitch
+Rule 21    bloqueCasosSwitch -> casoSwitch bloqueCasosSwitch
+Rule 22    casoSwitch -> CASE valores DOSPUNTOS subcodigo
+Rule 23    estructurasDeDatos -> mapa
+Rule 24    mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+Rule 25    mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato
+Rule 26    mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+Rule 27    elementosMapa -> elementoMapa
+Rule 28    elementosMapa -> elementoMapa elementosMapa
+Rule 29    elementoMapa -> valor DOSPUNTOS valor COMMA
+Rule 30    asignacion -> VAR ID tipoDato ASSIGN valor
+Rule 31    asignacion -> VAR ID ASSIGN valor
+Rule 32    asignacionCorta -> ID DOSPUNTOS ASSIGN valor
+Rule 33    tipoDato -> FLOAT64_TYPE
+Rule 34    tipoDato -> COMPLEX64_TYPE
+Rule 35    tipoDato -> INT_TYPE
+Rule 36    tipoDato -> BOOL_TYPE
+Rule 37    tipoDato -> STRING_TYPE
+Rule 38    valores -> valor
+Rule 39    valores -> valor COMMA valores
+Rule 40    valor -> FLOAT64
+Rule 41    valor -> COMPLEX64
+Rule 42    valor -> INT
+Rule 43    valor -> BOOL
+Rule 44    valor -> STRING
+Rule 45    valor -> expresionesAritmeticas
+Rule 46    valor -> condiciones
+Rule 47    valor -> ID
+Rule 48    valor -> estructurasDeDatos
+Rule 49    expresionesAritmeticas -> expresionAritmetica
+Rule 50    expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas
+Rule 51    expresionAritmetica -> valor operador valor
+Rule 52    expresionAritmetica -> LPAREN valor operador valor RPAREN
+Rule 53    operador -> PLUS
+Rule 54    operador -> MINUS
+Rule 55    operador -> TIMES
+Rule 56    operador -> DIVIDE
+Rule 57    operador -> MOD
+Rule 58    condiciones -> condicion
+Rule 59    condiciones -> condicion conector condiciones
+Rule 60    conector -> AND
+Rule 61    conector -> OR
+Rule 62    condicion -> valor operadorComp valor
+Rule 63    condicion -> BOOL
+Rule 64    operadorComp -> NOT_EQUAL
+Rule 65    operadorComp -> LESS_THAN
+Rule 66    operadorComp -> LESS_EQUAL
+Rule 67    operadorComp -> GREATER_THAN
+Rule 68    operadorComp -> GREATER_EQUAL
+Rule 69    operadorComp -> EQUAL
+Rule 70    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 60
+ASSIGN               : 30 31 32
+BOOL                 : 43 63
+BOOL_TYPE            : 36
+BREAK                : 
+CASE                 : 16 17 22
+CHAN                 : 
+COMMA                : 5 6 29 39
+COMMENT              : 
+COMPLEX64            : 41
+COMPLEX64_TYPE       : 34
+CONST                : 
+CONTINUE             : 
+DEFAULT              : 18
+DEFER                : 
+DIVIDE               : 56
+DOSPUNTOS            : 16 17 18 22 29 32
+ELSE                 : 
+EQUAL                : 69
+FALLTHROUGH          : 
+FLOAT64              : 40
+FLOAT64_TYPE         : 33
+FOR                  : 
+FUNC                 : 2
+GO                   : 
+GOTO                 : 
+GREATER_EQUAL        : 68
+GREATER_THAN         : 67
+ID                   : 2 7 8 11 12 17 30 31 32 47
+IF                   : 
+ILLEGAL              : 
+IMPORT               : 
+INT                  : 42
+INTERFACE            : 
+INT_TYPE             : 35
+LBRACE               : 2 11 12 13 24 26
+LBRACKET             : 24 25 26
+LESS_EQUAL           : 66
+LESS_THAN            : 65
+LPAREN               : 2 52
+MAP                  : 24 25 26
+MINUS                : 54
+MOD                  : 57
+NOT                  : 
+NOT_EQUAL            : 64
+OR                   : 61
+PACKAGE              : 
+PLUS                 : 53
+PUNTO                : 8 8 8
+RANGE                : 
+RBRACE               : 2 11 12 13 24 26
+RBRACKET             : 24 25 26
+RETURN               : 
+RPAREN               : 2 52
+SELECT               : 
+SEMICOLON            : 12
+STRING               : 44
+STRING_TYPE          : 37
+STRUCT               : 
+SWITCH               : 11 12 13
+TIMES                : 55
+TYPE                 : 
+VAR                  : 30 31
+error                : 
+
+Nonterminals, with rules where they appear
+
+argumento            : 3 5
+argumentoVariadico   : 4 6
+argumentos           : 2 5 6
+asignacion           : 10
+asignacionCorta      : 9 12
+bloqueCasosBooleanos : 13 15
+bloqueCasosSwitch    : 11 12 21
+casoBooleano         : 14 15
+casoDefault          : 11 12 13
+casoSwitch           : 20 21
+codigo               : 0
+condicion            : 58 59
+condiciones          : 16 46 59
+conector             : 59
+elementoMapa         : 27 28
+elementosMapa        : 26 28
+empty                : 19
+estructurasDeDatos   : 48
+expresionAritmetica  : 49 50
+expresionesAritmeticas : 45 50
+funcion              : 1
+mapa                 : 23
+operador             : 50 51 52
+operadorComp         : 62
+sentenciaSwitch      : 
+subcodigo            : 2 16 17 18 22
+tipoDato             : 7 8 24 24 25 25 26 26 30
+valor                : 29 29 30 31 32 38 39 51 51 52 52 62 62
+valores              : 22 39
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . codigo
+    (1) codigo -> . funcion
+    (2) funcion -> . FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE
+
+    FUNC            shift and go to state 3
+
+    codigo                         shift and go to state 1
+    funcion                        shift and go to state 2
+
+state 1
+
+    (0) S' -> codigo .
+
+
+
+state 2
+
+    (1) codigo -> funcion .
+
+    $end            reduce using rule 1 (codigo -> funcion .)
+
+
+state 3
+
+    (2) funcion -> FUNC . ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE
+
+    ID              shift and go to state 4
+
+
+state 4
+
+    (2) funcion -> FUNC ID . LPAREN argumentos RPAREN LBRACE subcodigo RBRACE
+
+    LPAREN          shift and go to state 5
+
+
+state 5
+
+    (2) funcion -> FUNC ID LPAREN . argumentos RPAREN LBRACE subcodigo RBRACE
+    (3) argumentos -> . argumento
+    (4) argumentos -> . argumentoVariadico
+    (5) argumentos -> . argumento COMMA argumentos
+    (6) argumentos -> . argumentoVariadico COMMA argumentos
+    (7) argumento -> . ID tipoDato
+    (8) argumentoVariadico -> . ID PUNTO PUNTO PUNTO tipoDato
+
+    ID              shift and go to state 6
+
+    argumentos                     shift and go to state 7
+    argumento                      shift and go to state 8
+    argumentoVariadico             shift and go to state 9
+
+state 6
+
+    (7) argumento -> ID . tipoDato
+    (8) argumentoVariadico -> ID . PUNTO PUNTO PUNTO tipoDato
+    (33) tipoDato -> . FLOAT64_TYPE
+    (34) tipoDato -> . COMPLEX64_TYPE
+    (35) tipoDato -> . INT_TYPE
+    (36) tipoDato -> . BOOL_TYPE
+    (37) tipoDato -> . STRING_TYPE
+
+    PUNTO           shift and go to state 11
+    FLOAT64_TYPE    shift and go to state 12
+    COMPLEX64_TYPE  shift and go to state 13
+    INT_TYPE        shift and go to state 14
+    BOOL_TYPE       shift and go to state 15
+    STRING_TYPE     shift and go to state 16
+
+    tipoDato                       shift and go to state 10
+
+state 7
+
+    (2) funcion -> FUNC ID LPAREN argumentos . RPAREN LBRACE subcodigo RBRACE
+
+    RPAREN          shift and go to state 17
+
+
+state 8
+
+    (3) argumentos -> argumento .
+    (5) argumentos -> argumento . COMMA argumentos
+
+    RPAREN          reduce using rule 3 (argumentos -> argumento .)
+    COMMA           shift and go to state 18
+
+
+state 9
+
+    (4) argumentos -> argumentoVariadico .
+    (6) argumentos -> argumentoVariadico . COMMA argumentos
+
+    RPAREN          reduce using rule 4 (argumentos -> argumentoVariadico .)
+    COMMA           shift and go to state 19
+
+
+state 10
+
+    (7) argumento -> ID tipoDato .
+
+    COMMA           reduce using rule 7 (argumento -> ID tipoDato .)
+    RPAREN          reduce using rule 7 (argumento -> ID tipoDato .)
+
+
+state 11
+
+    (8) argumentoVariadico -> ID PUNTO . PUNTO PUNTO tipoDato
+
+    PUNTO           shift and go to state 20
+
+
+state 12
+
+    (33) tipoDato -> FLOAT64_TYPE .
+
+    COMMA           reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    RPAREN          reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    ASSIGN          reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    RBRACKET        reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    LBRACE          reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    PLUS            reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    MINUS           reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    TIMES           reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    DIVIDE          reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    MOD             reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    NOT_EQUAL       reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    LESS_THAN       reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    LESS_EQUAL      reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    GREATER_THAN    reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    GREATER_EQUAL   reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    EQUAL           reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    RBRACE          reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    AND             reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    OR              reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+    DOSPUNTOS       reduce using rule 33 (tipoDato -> FLOAT64_TYPE .)
+
+
+state 13
+
+    (34) tipoDato -> COMPLEX64_TYPE .
+
+    COMMA           reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    RPAREN          reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    ASSIGN          reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    RBRACKET        reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    LBRACE          reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    PLUS            reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    MINUS           reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    TIMES           reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    DIVIDE          reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    MOD             reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    NOT_EQUAL       reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    LESS_THAN       reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    LESS_EQUAL      reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    GREATER_THAN    reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    GREATER_EQUAL   reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    EQUAL           reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    RBRACE          reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    AND             reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    OR              reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+    DOSPUNTOS       reduce using rule 34 (tipoDato -> COMPLEX64_TYPE .)
+
+
+state 14
+
+    (35) tipoDato -> INT_TYPE .
+
+    COMMA           reduce using rule 35 (tipoDato -> INT_TYPE .)
+    RPAREN          reduce using rule 35 (tipoDato -> INT_TYPE .)
+    ASSIGN          reduce using rule 35 (tipoDato -> INT_TYPE .)
+    RBRACKET        reduce using rule 35 (tipoDato -> INT_TYPE .)
+    LBRACE          reduce using rule 35 (tipoDato -> INT_TYPE .)
+    PLUS            reduce using rule 35 (tipoDato -> INT_TYPE .)
+    MINUS           reduce using rule 35 (tipoDato -> INT_TYPE .)
+    TIMES           reduce using rule 35 (tipoDato -> INT_TYPE .)
+    DIVIDE          reduce using rule 35 (tipoDato -> INT_TYPE .)
+    MOD             reduce using rule 35 (tipoDato -> INT_TYPE .)
+    NOT_EQUAL       reduce using rule 35 (tipoDato -> INT_TYPE .)
+    LESS_THAN       reduce using rule 35 (tipoDato -> INT_TYPE .)
+    LESS_EQUAL      reduce using rule 35 (tipoDato -> INT_TYPE .)
+    GREATER_THAN    reduce using rule 35 (tipoDato -> INT_TYPE .)
+    GREATER_EQUAL   reduce using rule 35 (tipoDato -> INT_TYPE .)
+    EQUAL           reduce using rule 35 (tipoDato -> INT_TYPE .)
+    RBRACE          reduce using rule 35 (tipoDato -> INT_TYPE .)
+    AND             reduce using rule 35 (tipoDato -> INT_TYPE .)
+    OR              reduce using rule 35 (tipoDato -> INT_TYPE .)
+    DOSPUNTOS       reduce using rule 35 (tipoDato -> INT_TYPE .)
+
+
+state 15
+
+    (36) tipoDato -> BOOL_TYPE .
+
+    COMMA           reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    RPAREN          reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    ASSIGN          reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    RBRACKET        reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    LBRACE          reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    PLUS            reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    MINUS           reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    TIMES           reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    DIVIDE          reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    MOD             reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    NOT_EQUAL       reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    LESS_THAN       reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    LESS_EQUAL      reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    GREATER_THAN    reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    GREATER_EQUAL   reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    EQUAL           reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    RBRACE          reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    AND             reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    OR              reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+    DOSPUNTOS       reduce using rule 36 (tipoDato -> BOOL_TYPE .)
+
+
+state 16
+
+    (37) tipoDato -> STRING_TYPE .
+
+    COMMA           reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    RPAREN          reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    ASSIGN          reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    RBRACKET        reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    LBRACE          reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    PLUS            reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    MINUS           reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    TIMES           reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    DIVIDE          reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    MOD             reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    NOT_EQUAL       reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    LESS_THAN       reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    LESS_EQUAL      reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    GREATER_THAN    reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    GREATER_EQUAL   reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    EQUAL           reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    RBRACE          reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    AND             reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    OR              reduce using rule 37 (tipoDato -> STRING_TYPE .)
+    DOSPUNTOS       reduce using rule 37 (tipoDato -> STRING_TYPE .)
+
+
+state 17
+
+    (2) funcion -> FUNC ID LPAREN argumentos RPAREN . LBRACE subcodigo RBRACE
+
+    LBRACE          shift and go to state 21
+
+
+state 18
+
+    (5) argumentos -> argumento COMMA . argumentos
+    (3) argumentos -> . argumento
+    (4) argumentos -> . argumentoVariadico
+    (5) argumentos -> . argumento COMMA argumentos
+    (6) argumentos -> . argumentoVariadico COMMA argumentos
+    (7) argumento -> . ID tipoDato
+    (8) argumentoVariadico -> . ID PUNTO PUNTO PUNTO tipoDato
+
+    ID              shift and go to state 6
+
+    argumento                      shift and go to state 8
+    argumentos                     shift and go to state 22
+    argumentoVariadico             shift and go to state 9
+
+state 19
+
+    (6) argumentos -> argumentoVariadico COMMA . argumentos
+    (3) argumentos -> . argumento
+    (4) argumentos -> . argumentoVariadico
+    (5) argumentos -> . argumento COMMA argumentos
+    (6) argumentos -> . argumentoVariadico COMMA argumentos
+    (7) argumento -> . ID tipoDato
+    (8) argumentoVariadico -> . ID PUNTO PUNTO PUNTO tipoDato
+
+    ID              shift and go to state 6
+
+    argumentoVariadico             shift and go to state 9
+    argumentos                     shift and go to state 23
+    argumento                      shift and go to state 8
+
+state 20
+
+    (8) argumentoVariadico -> ID PUNTO PUNTO . PUNTO tipoDato
+
+    PUNTO           shift and go to state 24
+
+
+state 21
+
+    (2) funcion -> FUNC ID LPAREN argumentos RPAREN LBRACE . subcodigo RBRACE
+    (9) subcodigo -> . asignacionCorta
+    (10) subcodigo -> . asignacion
+    (32) asignacionCorta -> . ID DOSPUNTOS ASSIGN valor
+    (30) asignacion -> . VAR ID tipoDato ASSIGN valor
+    (31) asignacion -> . VAR ID ASSIGN valor
+
+    ID              shift and go to state 25
+    VAR             shift and go to state 29
+
+    subcodigo                      shift and go to state 26
+    asignacionCorta                shift and go to state 27
+    asignacion                     shift and go to state 28
+
+state 22
+
+    (5) argumentos -> argumento COMMA argumentos .
+
+    RPAREN          reduce using rule 5 (argumentos -> argumento COMMA argumentos .)
+
+
+state 23
+
+    (6) argumentos -> argumentoVariadico COMMA argumentos .
+
+    RPAREN          reduce using rule 6 (argumentos -> argumentoVariadico COMMA argumentos .)
+
+
+state 24
+
+    (8) argumentoVariadico -> ID PUNTO PUNTO PUNTO . tipoDato
+    (33) tipoDato -> . FLOAT64_TYPE
+    (34) tipoDato -> . COMPLEX64_TYPE
+    (35) tipoDato -> . INT_TYPE
+    (36) tipoDato -> . BOOL_TYPE
+    (37) tipoDato -> . STRING_TYPE
+
+    FLOAT64_TYPE    shift and go to state 12
+    COMPLEX64_TYPE  shift and go to state 13
+    INT_TYPE        shift and go to state 14
+    BOOL_TYPE       shift and go to state 15
+    STRING_TYPE     shift and go to state 16
+
+    tipoDato                       shift and go to state 30
+
+state 25
+
+    (32) asignacionCorta -> ID . DOSPUNTOS ASSIGN valor
+
+    DOSPUNTOS       shift and go to state 31
+
+
+state 26
+
+    (2) funcion -> FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo . RBRACE
+
+    RBRACE          shift and go to state 32
+
+
+state 27
+
+    (9) subcodigo -> asignacionCorta .
+
+    RBRACE          reduce using rule 9 (subcodigo -> asignacionCorta .)
+
+
+state 28
+
+    (10) subcodigo -> asignacion .
+
+    RBRACE          reduce using rule 10 (subcodigo -> asignacion .)
+
+
+state 29
+
+    (30) asignacion -> VAR . ID tipoDato ASSIGN valor
+    (31) asignacion -> VAR . ID ASSIGN valor
+
+    ID              shift and go to state 33
+
+
+state 30
+
+    (8) argumentoVariadico -> ID PUNTO PUNTO PUNTO tipoDato .
+
+    COMMA           reduce using rule 8 (argumentoVariadico -> ID PUNTO PUNTO PUNTO tipoDato .)
+    RPAREN          reduce using rule 8 (argumentoVariadico -> ID PUNTO PUNTO PUNTO tipoDato .)
+
+
+state 31
+
+    (32) asignacionCorta -> ID DOSPUNTOS . ASSIGN valor
+
+    ASSIGN          shift and go to state 34
+
+
+state 32
+
+    (2) funcion -> FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE .
+
+    $end            reduce using rule 2 (funcion -> FUNC ID LPAREN argumentos RPAREN LBRACE subcodigo RBRACE .)
+
+
+state 33
+
+    (30) asignacion -> VAR ID . tipoDato ASSIGN valor
+    (31) asignacion -> VAR ID . ASSIGN valor
+    (33) tipoDato -> . FLOAT64_TYPE
+    (34) tipoDato -> . COMPLEX64_TYPE
+    (35) tipoDato -> . INT_TYPE
+    (36) tipoDato -> . BOOL_TYPE
+    (37) tipoDato -> . STRING_TYPE
+
+    ASSIGN          shift and go to state 36
+    FLOAT64_TYPE    shift and go to state 12
+    COMPLEX64_TYPE  shift and go to state 13
+    INT_TYPE        shift and go to state 14
+    BOOL_TYPE       shift and go to state 15
+    STRING_TYPE     shift and go to state 16
+
+    tipoDato                       shift and go to state 35
+
+state 34
+
+    (32) asignacionCorta -> ID DOSPUNTOS ASSIGN . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 38
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 35
+
+    (30) asignacion -> VAR ID tipoDato . ASSIGN valor
+
+    ASSIGN          shift and go to state 52
+
+
+state 36
+
+    (31) asignacion -> VAR ID ASSIGN . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 53
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 37
+
+    (47) valor -> ID .
+
+    PLUS            reduce using rule 47 (valor -> ID .)
+    MINUS           reduce using rule 47 (valor -> ID .)
+    TIMES           reduce using rule 47 (valor -> ID .)
+    DIVIDE          reduce using rule 47 (valor -> ID .)
+    MOD             reduce using rule 47 (valor -> ID .)
+    NOT_EQUAL       reduce using rule 47 (valor -> ID .)
+    LESS_THAN       reduce using rule 47 (valor -> ID .)
+    LESS_EQUAL      reduce using rule 47 (valor -> ID .)
+    GREATER_THAN    reduce using rule 47 (valor -> ID .)
+    GREATER_EQUAL   reduce using rule 47 (valor -> ID .)
+    EQUAL           reduce using rule 47 (valor -> ID .)
+    RBRACE          reduce using rule 47 (valor -> ID .)
+    AND             reduce using rule 47 (valor -> ID .)
+    OR              reduce using rule 47 (valor -> ID .)
+    RPAREN          reduce using rule 47 (valor -> ID .)
+    DOSPUNTOS       reduce using rule 47 (valor -> ID .)
+    COMMA           reduce using rule 47 (valor -> ID .)
+
+
+state 38
+
+    (32) asignacionCorta -> ID DOSPUNTOS ASSIGN valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    RBRACE          reduce using rule 32 (asignacionCorta -> ID DOSPUNTOS ASSIGN valor .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 39
+
+    (40) valor -> FLOAT64 .
+
+    PLUS            reduce using rule 40 (valor -> FLOAT64 .)
+    MINUS           reduce using rule 40 (valor -> FLOAT64 .)
+    TIMES           reduce using rule 40 (valor -> FLOAT64 .)
+    DIVIDE          reduce using rule 40 (valor -> FLOAT64 .)
+    MOD             reduce using rule 40 (valor -> FLOAT64 .)
+    NOT_EQUAL       reduce using rule 40 (valor -> FLOAT64 .)
+    LESS_THAN       reduce using rule 40 (valor -> FLOAT64 .)
+    LESS_EQUAL      reduce using rule 40 (valor -> FLOAT64 .)
+    GREATER_THAN    reduce using rule 40 (valor -> FLOAT64 .)
+    GREATER_EQUAL   reduce using rule 40 (valor -> FLOAT64 .)
+    EQUAL           reduce using rule 40 (valor -> FLOAT64 .)
+    RBRACE          reduce using rule 40 (valor -> FLOAT64 .)
+    AND             reduce using rule 40 (valor -> FLOAT64 .)
+    OR              reduce using rule 40 (valor -> FLOAT64 .)
+    RPAREN          reduce using rule 40 (valor -> FLOAT64 .)
+    DOSPUNTOS       reduce using rule 40 (valor -> FLOAT64 .)
+    COMMA           reduce using rule 40 (valor -> FLOAT64 .)
+
+
+state 40
+
+    (41) valor -> COMPLEX64 .
+
+    PLUS            reduce using rule 41 (valor -> COMPLEX64 .)
+    MINUS           reduce using rule 41 (valor -> COMPLEX64 .)
+    TIMES           reduce using rule 41 (valor -> COMPLEX64 .)
+    DIVIDE          reduce using rule 41 (valor -> COMPLEX64 .)
+    MOD             reduce using rule 41 (valor -> COMPLEX64 .)
+    NOT_EQUAL       reduce using rule 41 (valor -> COMPLEX64 .)
+    LESS_THAN       reduce using rule 41 (valor -> COMPLEX64 .)
+    LESS_EQUAL      reduce using rule 41 (valor -> COMPLEX64 .)
+    GREATER_THAN    reduce using rule 41 (valor -> COMPLEX64 .)
+    GREATER_EQUAL   reduce using rule 41 (valor -> COMPLEX64 .)
+    EQUAL           reduce using rule 41 (valor -> COMPLEX64 .)
+    RBRACE          reduce using rule 41 (valor -> COMPLEX64 .)
+    AND             reduce using rule 41 (valor -> COMPLEX64 .)
+    OR              reduce using rule 41 (valor -> COMPLEX64 .)
+    RPAREN          reduce using rule 41 (valor -> COMPLEX64 .)
+    DOSPUNTOS       reduce using rule 41 (valor -> COMPLEX64 .)
+    COMMA           reduce using rule 41 (valor -> COMPLEX64 .)
+
+
+state 41
+
+    (42) valor -> INT .
+
+    PLUS            reduce using rule 42 (valor -> INT .)
+    MINUS           reduce using rule 42 (valor -> INT .)
+    TIMES           reduce using rule 42 (valor -> INT .)
+    DIVIDE          reduce using rule 42 (valor -> INT .)
+    MOD             reduce using rule 42 (valor -> INT .)
+    NOT_EQUAL       reduce using rule 42 (valor -> INT .)
+    LESS_THAN       reduce using rule 42 (valor -> INT .)
+    LESS_EQUAL      reduce using rule 42 (valor -> INT .)
+    GREATER_THAN    reduce using rule 42 (valor -> INT .)
+    GREATER_EQUAL   reduce using rule 42 (valor -> INT .)
+    EQUAL           reduce using rule 42 (valor -> INT .)
+    RBRACE          reduce using rule 42 (valor -> INT .)
+    AND             reduce using rule 42 (valor -> INT .)
+    OR              reduce using rule 42 (valor -> INT .)
+    RPAREN          reduce using rule 42 (valor -> INT .)
+    DOSPUNTOS       reduce using rule 42 (valor -> INT .)
+    COMMA           reduce using rule 42 (valor -> INT .)
+
+
+state 42
+
+    (43) valor -> BOOL .
+    (63) condicion -> BOOL .
+
+  ! reduce/reduce conflict for AND resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for OR resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for PLUS resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for MINUS resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for TIMES resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for MOD resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for LESS_THAN resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for LESS_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for GREATER_THAN resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for RBRACE resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for DOSPUNTOS resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for COMMA resolved using rule 43 (valor -> BOOL .)
+    PLUS            reduce using rule 43 (valor -> BOOL .)
+    MINUS           reduce using rule 43 (valor -> BOOL .)
+    TIMES           reduce using rule 43 (valor -> BOOL .)
+    DIVIDE          reduce using rule 43 (valor -> BOOL .)
+    MOD             reduce using rule 43 (valor -> BOOL .)
+    NOT_EQUAL       reduce using rule 43 (valor -> BOOL .)
+    LESS_THAN       reduce using rule 43 (valor -> BOOL .)
+    LESS_EQUAL      reduce using rule 43 (valor -> BOOL .)
+    GREATER_THAN    reduce using rule 43 (valor -> BOOL .)
+    GREATER_EQUAL   reduce using rule 43 (valor -> BOOL .)
+    EQUAL           reduce using rule 43 (valor -> BOOL .)
+    RBRACE          reduce using rule 43 (valor -> BOOL .)
+    AND             reduce using rule 43 (valor -> BOOL .)
+    OR              reduce using rule 43 (valor -> BOOL .)
+    RPAREN          reduce using rule 43 (valor -> BOOL .)
+    DOSPUNTOS       reduce using rule 43 (valor -> BOOL .)
+    COMMA           reduce using rule 43 (valor -> BOOL .)
+
+  ! AND             [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! OR              [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! PLUS            [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! MINUS           [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! TIMES           [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! DIVIDE          [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! MOD             [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! NOT_EQUAL       [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! LESS_THAN       [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! LESS_EQUAL      [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! GREATER_THAN    [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! GREATER_EQUAL   [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! EQUAL           [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! RBRACE          [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! RPAREN          [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! DOSPUNTOS       [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! COMMA           [ reduce using rule 63 (condicion -> BOOL .) ]
+
+
+state 43
+
+    (44) valor -> STRING .
+
+    PLUS            reduce using rule 44 (valor -> STRING .)
+    MINUS           reduce using rule 44 (valor -> STRING .)
+    TIMES           reduce using rule 44 (valor -> STRING .)
+    DIVIDE          reduce using rule 44 (valor -> STRING .)
+    MOD             reduce using rule 44 (valor -> STRING .)
+    NOT_EQUAL       reduce using rule 44 (valor -> STRING .)
+    LESS_THAN       reduce using rule 44 (valor -> STRING .)
+    LESS_EQUAL      reduce using rule 44 (valor -> STRING .)
+    GREATER_THAN    reduce using rule 44 (valor -> STRING .)
+    GREATER_EQUAL   reduce using rule 44 (valor -> STRING .)
+    EQUAL           reduce using rule 44 (valor -> STRING .)
+    RBRACE          reduce using rule 44 (valor -> STRING .)
+    AND             reduce using rule 44 (valor -> STRING .)
+    OR              reduce using rule 44 (valor -> STRING .)
+    RPAREN          reduce using rule 44 (valor -> STRING .)
+    DOSPUNTOS       reduce using rule 44 (valor -> STRING .)
+    COMMA           reduce using rule 44 (valor -> STRING .)
+
+
+state 44
+
+    (45) valor -> expresionesAritmeticas .
+
+    PLUS            reduce using rule 45 (valor -> expresionesAritmeticas .)
+    MINUS           reduce using rule 45 (valor -> expresionesAritmeticas .)
+    TIMES           reduce using rule 45 (valor -> expresionesAritmeticas .)
+    DIVIDE          reduce using rule 45 (valor -> expresionesAritmeticas .)
+    MOD             reduce using rule 45 (valor -> expresionesAritmeticas .)
+    NOT_EQUAL       reduce using rule 45 (valor -> expresionesAritmeticas .)
+    LESS_THAN       reduce using rule 45 (valor -> expresionesAritmeticas .)
+    LESS_EQUAL      reduce using rule 45 (valor -> expresionesAritmeticas .)
+    GREATER_THAN    reduce using rule 45 (valor -> expresionesAritmeticas .)
+    GREATER_EQUAL   reduce using rule 45 (valor -> expresionesAritmeticas .)
+    EQUAL           reduce using rule 45 (valor -> expresionesAritmeticas .)
+    RBRACE          reduce using rule 45 (valor -> expresionesAritmeticas .)
+    AND             reduce using rule 45 (valor -> expresionesAritmeticas .)
+    OR              reduce using rule 45 (valor -> expresionesAritmeticas .)
+    RPAREN          reduce using rule 45 (valor -> expresionesAritmeticas .)
+    DOSPUNTOS       reduce using rule 45 (valor -> expresionesAritmeticas .)
+    COMMA           reduce using rule 45 (valor -> expresionesAritmeticas .)
+
+
+state 45
+
+    (46) valor -> condiciones .
+
+    PLUS            reduce using rule 46 (valor -> condiciones .)
+    MINUS           reduce using rule 46 (valor -> condiciones .)
+    TIMES           reduce using rule 46 (valor -> condiciones .)
+    DIVIDE          reduce using rule 46 (valor -> condiciones .)
+    MOD             reduce using rule 46 (valor -> condiciones .)
+    NOT_EQUAL       reduce using rule 46 (valor -> condiciones .)
+    LESS_THAN       reduce using rule 46 (valor -> condiciones .)
+    LESS_EQUAL      reduce using rule 46 (valor -> condiciones .)
+    GREATER_THAN    reduce using rule 46 (valor -> condiciones .)
+    GREATER_EQUAL   reduce using rule 46 (valor -> condiciones .)
+    EQUAL           reduce using rule 46 (valor -> condiciones .)
+    RBRACE          reduce using rule 46 (valor -> condiciones .)
+    AND             reduce using rule 46 (valor -> condiciones .)
+    OR              reduce using rule 46 (valor -> condiciones .)
+    RPAREN          reduce using rule 46 (valor -> condiciones .)
+    DOSPUNTOS       reduce using rule 46 (valor -> condiciones .)
+    COMMA           reduce using rule 46 (valor -> condiciones .)
+
+
+state 46
+
+    (48) valor -> estructurasDeDatos .
+
+    PLUS            reduce using rule 48 (valor -> estructurasDeDatos .)
+    MINUS           reduce using rule 48 (valor -> estructurasDeDatos .)
+    TIMES           reduce using rule 48 (valor -> estructurasDeDatos .)
+    DIVIDE          reduce using rule 48 (valor -> estructurasDeDatos .)
+    MOD             reduce using rule 48 (valor -> estructurasDeDatos .)
+    NOT_EQUAL       reduce using rule 48 (valor -> estructurasDeDatos .)
+    LESS_THAN       reduce using rule 48 (valor -> estructurasDeDatos .)
+    LESS_EQUAL      reduce using rule 48 (valor -> estructurasDeDatos .)
+    GREATER_THAN    reduce using rule 48 (valor -> estructurasDeDatos .)
+    GREATER_EQUAL   reduce using rule 48 (valor -> estructurasDeDatos .)
+    EQUAL           reduce using rule 48 (valor -> estructurasDeDatos .)
+    RBRACE          reduce using rule 48 (valor -> estructurasDeDatos .)
+    AND             reduce using rule 48 (valor -> estructurasDeDatos .)
+    OR              reduce using rule 48 (valor -> estructurasDeDatos .)
+    RPAREN          reduce using rule 48 (valor -> estructurasDeDatos .)
+    DOSPUNTOS       reduce using rule 48 (valor -> estructurasDeDatos .)
+    COMMA           reduce using rule 48 (valor -> estructurasDeDatos .)
+
+
+state 47
+
+    (49) expresionesAritmeticas -> expresionAritmetica .
+    (50) expresionesAritmeticas -> expresionAritmetica . operador expresionesAritmeticas
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+    NOT_EQUAL       reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    LESS_THAN       reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    LESS_EQUAL      reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    GREATER_THAN    reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    GREATER_EQUAL   reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    EQUAL           reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    RBRACE          reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    AND             reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    OR              reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    RPAREN          reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    DOSPUNTOS       reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    COMMA           reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+
+  ! PLUS            [ reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .) ]
+  ! MINUS           [ reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .) ]
+  ! TIMES           [ reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .) ]
+  ! DIVIDE          [ reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .) ]
+  ! MOD             [ reduce using rule 49 (expresionesAritmeticas -> expresionAritmetica .) ]
+
+    operador                       shift and go to state 67
+
+state 48
+
+    (58) condiciones -> condicion .
+    (59) condiciones -> condicion . conector condiciones
+    (60) conector -> . AND
+    (61) conector -> . OR
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    PLUS            reduce using rule 58 (condiciones -> condicion .)
+    MINUS           reduce using rule 58 (condiciones -> condicion .)
+    TIMES           reduce using rule 58 (condiciones -> condicion .)
+    DIVIDE          reduce using rule 58 (condiciones -> condicion .)
+    MOD             reduce using rule 58 (condiciones -> condicion .)
+    NOT_EQUAL       reduce using rule 58 (condiciones -> condicion .)
+    LESS_THAN       reduce using rule 58 (condiciones -> condicion .)
+    LESS_EQUAL      reduce using rule 58 (condiciones -> condicion .)
+    GREATER_THAN    reduce using rule 58 (condiciones -> condicion .)
+    GREATER_EQUAL   reduce using rule 58 (condiciones -> condicion .)
+    EQUAL           reduce using rule 58 (condiciones -> condicion .)
+    RBRACE          reduce using rule 58 (condiciones -> condicion .)
+    RPAREN          reduce using rule 58 (condiciones -> condicion .)
+    DOSPUNTOS       reduce using rule 58 (condiciones -> condicion .)
+    COMMA           reduce using rule 58 (condiciones -> condicion .)
+    AND             shift and go to state 69
+    OR              shift and go to state 70
+
+  ! AND             [ reduce using rule 58 (condiciones -> condicion .) ]
+  ! OR              [ reduce using rule 58 (condiciones -> condicion .) ]
+
+    conector                       shift and go to state 68
+
+state 49
+
+    (23) estructurasDeDatos -> mapa .
+
+    PLUS            reduce using rule 23 (estructurasDeDatos -> mapa .)
+    MINUS           reduce using rule 23 (estructurasDeDatos -> mapa .)
+    TIMES           reduce using rule 23 (estructurasDeDatos -> mapa .)
+    DIVIDE          reduce using rule 23 (estructurasDeDatos -> mapa .)
+    MOD             reduce using rule 23 (estructurasDeDatos -> mapa .)
+    NOT_EQUAL       reduce using rule 23 (estructurasDeDatos -> mapa .)
+    LESS_THAN       reduce using rule 23 (estructurasDeDatos -> mapa .)
+    LESS_EQUAL      reduce using rule 23 (estructurasDeDatos -> mapa .)
+    GREATER_THAN    reduce using rule 23 (estructurasDeDatos -> mapa .)
+    GREATER_EQUAL   reduce using rule 23 (estructurasDeDatos -> mapa .)
+    EQUAL           reduce using rule 23 (estructurasDeDatos -> mapa .)
+    RBRACE          reduce using rule 23 (estructurasDeDatos -> mapa .)
+    AND             reduce using rule 23 (estructurasDeDatos -> mapa .)
+    OR              reduce using rule 23 (estructurasDeDatos -> mapa .)
+    RPAREN          reduce using rule 23 (estructurasDeDatos -> mapa .)
+    DOSPUNTOS       reduce using rule 23 (estructurasDeDatos -> mapa .)
+    COMMA           reduce using rule 23 (estructurasDeDatos -> mapa .)
+
+
+state 50
+
+    (52) expresionAritmetica -> LPAREN . valor operador valor RPAREN
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 71
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 51
+
+    (24) mapa -> MAP . LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> MAP . LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> MAP . LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    LBRACKET        shift and go to state 72
+
+
+state 52
+
+    (30) asignacion -> VAR ID tipoDato ASSIGN . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 73
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 53
+
+    (31) asignacion -> VAR ID ASSIGN valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    RBRACE          reduce using rule 31 (asignacion -> VAR ID ASSIGN valor .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 54
+
+    (51) expresionAritmetica -> valor operador . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 74
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 55
+
+    (62) condicion -> valor operadorComp . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 75
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 56
+
+    (53) operador -> PLUS .
+
+    FLOAT64         reduce using rule 53 (operador -> PLUS .)
+    COMPLEX64       reduce using rule 53 (operador -> PLUS .)
+    INT             reduce using rule 53 (operador -> PLUS .)
+    BOOL            reduce using rule 53 (operador -> PLUS .)
+    STRING          reduce using rule 53 (operador -> PLUS .)
+    ID              reduce using rule 53 (operador -> PLUS .)
+    LPAREN          reduce using rule 53 (operador -> PLUS .)
+    MAP             reduce using rule 53 (operador -> PLUS .)
+
+
+state 57
+
+    (54) operador -> MINUS .
+
+    FLOAT64         reduce using rule 54 (operador -> MINUS .)
+    COMPLEX64       reduce using rule 54 (operador -> MINUS .)
+    INT             reduce using rule 54 (operador -> MINUS .)
+    BOOL            reduce using rule 54 (operador -> MINUS .)
+    STRING          reduce using rule 54 (operador -> MINUS .)
+    ID              reduce using rule 54 (operador -> MINUS .)
+    LPAREN          reduce using rule 54 (operador -> MINUS .)
+    MAP             reduce using rule 54 (operador -> MINUS .)
+
+
+state 58
+
+    (55) operador -> TIMES .
+
+    FLOAT64         reduce using rule 55 (operador -> TIMES .)
+    COMPLEX64       reduce using rule 55 (operador -> TIMES .)
+    INT             reduce using rule 55 (operador -> TIMES .)
+    BOOL            reduce using rule 55 (operador -> TIMES .)
+    STRING          reduce using rule 55 (operador -> TIMES .)
+    ID              reduce using rule 55 (operador -> TIMES .)
+    LPAREN          reduce using rule 55 (operador -> TIMES .)
+    MAP             reduce using rule 55 (operador -> TIMES .)
+
+
+state 59
+
+    (56) operador -> DIVIDE .
+
+    FLOAT64         reduce using rule 56 (operador -> DIVIDE .)
+    COMPLEX64       reduce using rule 56 (operador -> DIVIDE .)
+    INT             reduce using rule 56 (operador -> DIVIDE .)
+    BOOL            reduce using rule 56 (operador -> DIVIDE .)
+    STRING          reduce using rule 56 (operador -> DIVIDE .)
+    ID              reduce using rule 56 (operador -> DIVIDE .)
+    LPAREN          reduce using rule 56 (operador -> DIVIDE .)
+    MAP             reduce using rule 56 (operador -> DIVIDE .)
+
+
+state 60
+
+    (57) operador -> MOD .
+
+    FLOAT64         reduce using rule 57 (operador -> MOD .)
+    COMPLEX64       reduce using rule 57 (operador -> MOD .)
+    INT             reduce using rule 57 (operador -> MOD .)
+    BOOL            reduce using rule 57 (operador -> MOD .)
+    STRING          reduce using rule 57 (operador -> MOD .)
+    ID              reduce using rule 57 (operador -> MOD .)
+    LPAREN          reduce using rule 57 (operador -> MOD .)
+    MAP             reduce using rule 57 (operador -> MOD .)
+
+
+state 61
+
+    (64) operadorComp -> NOT_EQUAL .
+
+    FLOAT64         reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    COMPLEX64       reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    INT             reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    BOOL            reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    STRING          reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    ID              reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    LPAREN          reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+    MAP             reduce using rule 64 (operadorComp -> NOT_EQUAL .)
+
+
+state 62
+
+    (65) operadorComp -> LESS_THAN .
+
+    FLOAT64         reduce using rule 65 (operadorComp -> LESS_THAN .)
+    COMPLEX64       reduce using rule 65 (operadorComp -> LESS_THAN .)
+    INT             reduce using rule 65 (operadorComp -> LESS_THAN .)
+    BOOL            reduce using rule 65 (operadorComp -> LESS_THAN .)
+    STRING          reduce using rule 65 (operadorComp -> LESS_THAN .)
+    ID              reduce using rule 65 (operadorComp -> LESS_THAN .)
+    LPAREN          reduce using rule 65 (operadorComp -> LESS_THAN .)
+    MAP             reduce using rule 65 (operadorComp -> LESS_THAN .)
+
+
+state 63
+
+    (66) operadorComp -> LESS_EQUAL .
+
+    FLOAT64         reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    COMPLEX64       reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    INT             reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    BOOL            reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    STRING          reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    ID              reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    LPAREN          reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+    MAP             reduce using rule 66 (operadorComp -> LESS_EQUAL .)
+
+
+state 64
+
+    (67) operadorComp -> GREATER_THAN .
+
+    FLOAT64         reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    COMPLEX64       reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    INT             reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    BOOL            reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    STRING          reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    ID              reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    LPAREN          reduce using rule 67 (operadorComp -> GREATER_THAN .)
+    MAP             reduce using rule 67 (operadorComp -> GREATER_THAN .)
+
+
+state 65
+
+    (68) operadorComp -> GREATER_EQUAL .
+
+    FLOAT64         reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    COMPLEX64       reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    INT             reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    BOOL            reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    STRING          reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    ID              reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    LPAREN          reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+    MAP             reduce using rule 68 (operadorComp -> GREATER_EQUAL .)
+
+
+state 66
+
+    (69) operadorComp -> EQUAL .
+
+    FLOAT64         reduce using rule 69 (operadorComp -> EQUAL .)
+    COMPLEX64       reduce using rule 69 (operadorComp -> EQUAL .)
+    INT             reduce using rule 69 (operadorComp -> EQUAL .)
+    BOOL            reduce using rule 69 (operadorComp -> EQUAL .)
+    STRING          reduce using rule 69 (operadorComp -> EQUAL .)
+    ID              reduce using rule 69 (operadorComp -> EQUAL .)
+    LPAREN          reduce using rule 69 (operadorComp -> EQUAL .)
+    MAP             reduce using rule 69 (operadorComp -> EQUAL .)
+
+
+state 67
+
+    (50) expresionesAritmeticas -> expresionAritmetica operador . expresionesAritmeticas
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    LPAREN          shift and go to state 50
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    MAP             shift and go to state 51
+
+    expresionAritmetica            shift and go to state 47
+    expresionesAritmeticas         shift and go to state 76
+    valor                          shift and go to state 77
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 68
+
+    (59) condiciones -> condicion conector . condiciones
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    BOOL            shift and go to state 80
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    condicion                      shift and go to state 48
+    condiciones                    shift and go to state 78
+    valor                          shift and go to state 79
+    expresionesAritmeticas         shift and go to state 44
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    mapa                           shift and go to state 49
+
+state 69
+
+    (60) conector -> AND .
+
+    BOOL            reduce using rule 60 (conector -> AND .)
+    FLOAT64         reduce using rule 60 (conector -> AND .)
+    COMPLEX64       reduce using rule 60 (conector -> AND .)
+    INT             reduce using rule 60 (conector -> AND .)
+    STRING          reduce using rule 60 (conector -> AND .)
+    ID              reduce using rule 60 (conector -> AND .)
+    LPAREN          reduce using rule 60 (conector -> AND .)
+    MAP             reduce using rule 60 (conector -> AND .)
+
+
+state 70
+
+    (61) conector -> OR .
+
+    BOOL            reduce using rule 61 (conector -> OR .)
+    FLOAT64         reduce using rule 61 (conector -> OR .)
+    COMPLEX64       reduce using rule 61 (conector -> OR .)
+    INT             reduce using rule 61 (conector -> OR .)
+    STRING          reduce using rule 61 (conector -> OR .)
+    ID              reduce using rule 61 (conector -> OR .)
+    LPAREN          reduce using rule 61 (conector -> OR .)
+    MAP             reduce using rule 61 (conector -> OR .)
+
+
+state 71
+
+    (52) expresionAritmetica -> LPAREN valor . operador valor RPAREN
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 81
+    operadorComp                   shift and go to state 55
+
+state 72
+
+    (24) mapa -> MAP LBRACKET . tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> MAP LBRACKET . tipoDato RBRACKET tipoDato
+    (26) mapa -> MAP LBRACKET . tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+    (33) tipoDato -> . FLOAT64_TYPE
+    (34) tipoDato -> . COMPLEX64_TYPE
+    (35) tipoDato -> . INT_TYPE
+    (36) tipoDato -> . BOOL_TYPE
+    (37) tipoDato -> . STRING_TYPE
+
+    FLOAT64_TYPE    shift and go to state 12
+    COMPLEX64_TYPE  shift and go to state 13
+    INT_TYPE        shift and go to state 14
+    BOOL_TYPE       shift and go to state 15
+    STRING_TYPE     shift and go to state 16
+
+    tipoDato                       shift and go to state 82
+
+state 73
+
+    (30) asignacion -> VAR ID tipoDato ASSIGN valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    RBRACE          reduce using rule 30 (asignacion -> VAR ID tipoDato ASSIGN valor .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 74
+
+    (51) expresionAritmetica -> valor operador valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+    RBRACE          reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    AND             reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    OR              reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    RPAREN          reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    DOSPUNTOS       reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    COMMA           reduce using rule 51 (expresionAritmetica -> valor operador valor .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+  ! PLUS            [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! MINUS           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! TIMES           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! DIVIDE          [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! MOD             [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! NOT_EQUAL       [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! LESS_THAN       [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! LESS_EQUAL      [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! GREATER_THAN    [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! GREATER_EQUAL   [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! EQUAL           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 75
+
+    (62) condicion -> valor operadorComp valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+    AND             reduce using rule 62 (condicion -> valor operadorComp valor .)
+    OR              reduce using rule 62 (condicion -> valor operadorComp valor .)
+    RBRACE          reduce using rule 62 (condicion -> valor operadorComp valor .)
+    RPAREN          reduce using rule 62 (condicion -> valor operadorComp valor .)
+    DOSPUNTOS       reduce using rule 62 (condicion -> valor operadorComp valor .)
+    COMMA           reduce using rule 62 (condicion -> valor operadorComp valor .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+  ! PLUS            [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! MINUS           [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! TIMES           [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! DIVIDE          [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! MOD             [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! NOT_EQUAL       [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! LESS_THAN       [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! LESS_EQUAL      [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! GREATER_THAN    [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! GREATER_EQUAL   [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+  ! EQUAL           [ reduce using rule 62 (condicion -> valor operadorComp valor .) ]
+
+    operadorComp                   shift and go to state 55
+    operador                       shift and go to state 54
+
+state 76
+
+    (50) expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .
+    (45) valor -> expresionesAritmeticas .
+
+  ! reduce/reduce conflict for PLUS resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for MINUS resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for TIMES resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for MOD resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for LESS_THAN resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for LESS_EQUAL resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for GREATER_THAN resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 45 (valor -> expresionesAritmeticas .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 45 (valor -> expresionesAritmeticas .)
+    RBRACE          reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    AND             reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    OR              reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    RPAREN          reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    DOSPUNTOS       reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    COMMA           reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .)
+    PLUS            reduce using rule 45 (valor -> expresionesAritmeticas .)
+    MINUS           reduce using rule 45 (valor -> expresionesAritmeticas .)
+    TIMES           reduce using rule 45 (valor -> expresionesAritmeticas .)
+    DIVIDE          reduce using rule 45 (valor -> expresionesAritmeticas .)
+    MOD             reduce using rule 45 (valor -> expresionesAritmeticas .)
+    NOT_EQUAL       reduce using rule 45 (valor -> expresionesAritmeticas .)
+    LESS_THAN       reduce using rule 45 (valor -> expresionesAritmeticas .)
+    LESS_EQUAL      reduce using rule 45 (valor -> expresionesAritmeticas .)
+    GREATER_THAN    reduce using rule 45 (valor -> expresionesAritmeticas .)
+    GREATER_EQUAL   reduce using rule 45 (valor -> expresionesAritmeticas .)
+    EQUAL           reduce using rule 45 (valor -> expresionesAritmeticas .)
+
+  ! PLUS            [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! MINUS           [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! TIMES           [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! DIVIDE          [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! MOD             [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! NOT_EQUAL       [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! LESS_THAN       [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! LESS_EQUAL      [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! GREATER_THAN    [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! GREATER_EQUAL   [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+  ! EQUAL           [ reduce using rule 50 (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas .) ]
+
+
+state 77
+
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 78
+
+    (59) condiciones -> condicion conector condiciones .
+    (46) valor -> condiciones .
+
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for LESS_THAN resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for LESS_EQUAL resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for GREATER_THAN resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for PLUS resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for MINUS resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for TIMES resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 46 (valor -> condiciones .)
+  ! reduce/reduce conflict for MOD resolved using rule 46 (valor -> condiciones .)
+    RBRACE          reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    AND             reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    OR              reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    RPAREN          reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    DOSPUNTOS       reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    COMMA           reduce using rule 59 (condiciones -> condicion conector condiciones .)
+    NOT_EQUAL       reduce using rule 46 (valor -> condiciones .)
+    LESS_THAN       reduce using rule 46 (valor -> condiciones .)
+    LESS_EQUAL      reduce using rule 46 (valor -> condiciones .)
+    GREATER_THAN    reduce using rule 46 (valor -> condiciones .)
+    GREATER_EQUAL   reduce using rule 46 (valor -> condiciones .)
+    EQUAL           reduce using rule 46 (valor -> condiciones .)
+    PLUS            reduce using rule 46 (valor -> condiciones .)
+    MINUS           reduce using rule 46 (valor -> condiciones .)
+    TIMES           reduce using rule 46 (valor -> condiciones .)
+    DIVIDE          reduce using rule 46 (valor -> condiciones .)
+    MOD             reduce using rule 46 (valor -> condiciones .)
+
+  ! PLUS            [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! MINUS           [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! TIMES           [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! DIVIDE          [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! MOD             [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! NOT_EQUAL       [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! LESS_THAN       [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! LESS_EQUAL      [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! GREATER_THAN    [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! GREATER_EQUAL   [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+  ! EQUAL           [ reduce using rule 59 (condiciones -> condicion conector condiciones .) ]
+
+
+state 79
+
+    (62) condicion -> valor . operadorComp valor
+    (51) expresionAritmetica -> valor . operador valor
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+
+    operadorComp                   shift and go to state 55
+    operador                       shift and go to state 54
+
+state 80
+
+    (63) condicion -> BOOL .
+    (43) valor -> BOOL .
+
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for LESS_THAN resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for LESS_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for GREATER_THAN resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for PLUS resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for MINUS resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for TIMES resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 43 (valor -> BOOL .)
+  ! reduce/reduce conflict for MOD resolved using rule 43 (valor -> BOOL .)
+    RBRACE          reduce using rule 63 (condicion -> BOOL .)
+    AND             reduce using rule 63 (condicion -> BOOL .)
+    OR              reduce using rule 63 (condicion -> BOOL .)
+    RPAREN          reduce using rule 63 (condicion -> BOOL .)
+    DOSPUNTOS       reduce using rule 63 (condicion -> BOOL .)
+    COMMA           reduce using rule 63 (condicion -> BOOL .)
+    NOT_EQUAL       reduce using rule 43 (valor -> BOOL .)
+    LESS_THAN       reduce using rule 43 (valor -> BOOL .)
+    LESS_EQUAL      reduce using rule 43 (valor -> BOOL .)
+    GREATER_THAN    reduce using rule 43 (valor -> BOOL .)
+    GREATER_EQUAL   reduce using rule 43 (valor -> BOOL .)
+    EQUAL           reduce using rule 43 (valor -> BOOL .)
+    PLUS            reduce using rule 43 (valor -> BOOL .)
+    MINUS           reduce using rule 43 (valor -> BOOL .)
+    TIMES           reduce using rule 43 (valor -> BOOL .)
+    DIVIDE          reduce using rule 43 (valor -> BOOL .)
+    MOD             reduce using rule 43 (valor -> BOOL .)
+
+  ! PLUS            [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! MINUS           [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! TIMES           [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! DIVIDE          [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! MOD             [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! NOT_EQUAL       [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! LESS_THAN       [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! LESS_EQUAL      [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! GREATER_THAN    [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! GREATER_EQUAL   [ reduce using rule 63 (condicion -> BOOL .) ]
+  ! EQUAL           [ reduce using rule 63 (condicion -> BOOL .) ]
+
+
+state 81
+
+    (52) expresionAritmetica -> LPAREN valor operador . valor RPAREN
+    (51) expresionAritmetica -> valor operador . valor
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 83
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 82
+
+    (24) mapa -> MAP LBRACKET tipoDato . RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> MAP LBRACKET tipoDato . RBRACKET tipoDato
+    (26) mapa -> MAP LBRACKET tipoDato . RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    RBRACKET        shift and go to state 84
+
+
+state 83
+
+    (52) expresionAritmetica -> LPAREN valor operador valor . RPAREN
+    (51) expresionAritmetica -> valor operador valor .
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+    RPAREN          shift and go to state 85
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+  ! PLUS            [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! MINUS           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! TIMES           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! DIVIDE          [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! MOD             [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! NOT_EQUAL       [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! LESS_THAN       [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! LESS_EQUAL      [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! GREATER_THAN    [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! GREATER_EQUAL   [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+  ! EQUAL           [ reduce using rule 51 (expresionAritmetica -> valor operador valor .) ]
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 84
+
+    (24) mapa -> MAP LBRACKET tipoDato RBRACKET . tipoDato LBRACE RBRACE
+    (25) mapa -> MAP LBRACKET tipoDato RBRACKET . tipoDato
+    (26) mapa -> MAP LBRACKET tipoDato RBRACKET . tipoDato LBRACE elementosMapa RBRACE
+    (33) tipoDato -> . FLOAT64_TYPE
+    (34) tipoDato -> . COMPLEX64_TYPE
+    (35) tipoDato -> . INT_TYPE
+    (36) tipoDato -> . BOOL_TYPE
+    (37) tipoDato -> . STRING_TYPE
+
+    FLOAT64_TYPE    shift and go to state 12
+    COMPLEX64_TYPE  shift and go to state 13
+    INT_TYPE        shift and go to state 14
+    BOOL_TYPE       shift and go to state 15
+    STRING_TYPE     shift and go to state 16
+
+    tipoDato                       shift and go to state 86
+
+state 85
+
+    (52) expresionAritmetica -> LPAREN valor operador valor RPAREN .
+
+    PLUS            reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    MINUS           reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    TIMES           reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    DIVIDE          reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    MOD             reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    NOT_EQUAL       reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    LESS_THAN       reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    LESS_EQUAL      reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    GREATER_THAN    reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    GREATER_EQUAL   reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    EQUAL           reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    RBRACE          reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    AND             reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    OR              reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    RPAREN          reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    DOSPUNTOS       reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+    COMMA           reduce using rule 52 (expresionAritmetica -> LPAREN valor operador valor RPAREN .)
+
+
+state 86
+
+    (24) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato . LBRACE RBRACE
+    (25) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .
+    (26) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato . LBRACE elementosMapa RBRACE
+
+    LBRACE          shift and go to state 87
+    PLUS            reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    MINUS           reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    TIMES           reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    DIVIDE          reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    MOD             reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    NOT_EQUAL       reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    LESS_THAN       reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    LESS_EQUAL      reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    GREATER_THAN    reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    GREATER_EQUAL   reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    EQUAL           reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    RBRACE          reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    AND             reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    OR              reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    RPAREN          reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    DOSPUNTOS       reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+    COMMA           reduce using rule 25 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato .)
+
+
+state 87
+
+    (24) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE . RBRACE
+    (26) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE . elementosMapa RBRACE
+    (27) elementosMapa -> . elementoMapa
+    (28) elementosMapa -> . elementoMapa elementosMapa
+    (29) elementoMapa -> . valor DOSPUNTOS valor COMMA
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    RBRACE          shift and go to state 88
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    elementosMapa                  shift and go to state 89
+    elementoMapa                   shift and go to state 90
+    valor                          shift and go to state 91
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 88
+
+    (24) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .
+
+    PLUS            reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    MINUS           reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    TIMES           reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    DIVIDE          reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    MOD             reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    NOT_EQUAL       reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    LESS_THAN       reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    LESS_EQUAL      reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    GREATER_THAN    reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    GREATER_EQUAL   reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    EQUAL           reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    RBRACE          reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    AND             reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    OR              reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    RPAREN          reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    DOSPUNTOS       reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+    COMMA           reduce using rule 24 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE .)
+
+
+state 89
+
+    (26) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa . RBRACE
+
+    RBRACE          shift and go to state 92
+
+
+state 90
+
+    (27) elementosMapa -> elementoMapa .
+    (28) elementosMapa -> elementoMapa . elementosMapa
+    (27) elementosMapa -> . elementoMapa
+    (28) elementosMapa -> . elementoMapa elementosMapa
+    (29) elementoMapa -> . valor DOSPUNTOS valor COMMA
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    RBRACE          reduce using rule 27 (elementosMapa -> elementoMapa .)
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    elementoMapa                   shift and go to state 90
+    elementosMapa                  shift and go to state 93
+    valor                          shift and go to state 91
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 91
+
+    (29) elementoMapa -> valor . DOSPUNTOS valor COMMA
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    DOSPUNTOS       shift and go to state 94
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 92
+
+    (26) mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .
+
+    PLUS            reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    MINUS           reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    TIMES           reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    DIVIDE          reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    MOD             reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    NOT_EQUAL       reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    LESS_THAN       reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    LESS_EQUAL      reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    GREATER_THAN    reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    GREATER_EQUAL   reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    EQUAL           reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    RBRACE          reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    AND             reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    OR              reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    RPAREN          reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    DOSPUNTOS       reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+    COMMA           reduce using rule 26 (mapa -> MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE .)
+
+
+state 93
+
+    (28) elementosMapa -> elementoMapa elementosMapa .
+
+    RBRACE          reduce using rule 28 (elementosMapa -> elementoMapa elementosMapa .)
+
+
+state 94
+
+    (29) elementoMapa -> valor DOSPUNTOS . valor COMMA
+    (40) valor -> . FLOAT64
+    (41) valor -> . COMPLEX64
+    (42) valor -> . INT
+    (43) valor -> . BOOL
+    (44) valor -> . STRING
+    (45) valor -> . expresionesAritmeticas
+    (46) valor -> . condiciones
+    (47) valor -> . ID
+    (48) valor -> . estructurasDeDatos
+    (49) expresionesAritmeticas -> . expresionAritmetica
+    (50) expresionesAritmeticas -> . expresionAritmetica operador expresionesAritmeticas
+    (58) condiciones -> . condicion
+    (59) condiciones -> . condicion conector condiciones
+    (23) estructurasDeDatos -> . mapa
+    (51) expresionAritmetica -> . valor operador valor
+    (52) expresionAritmetica -> . LPAREN valor operador valor RPAREN
+    (62) condicion -> . valor operadorComp valor
+    (63) condicion -> . BOOL
+    (24) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
+    (25) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato
+    (26) mapa -> . MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE elementosMapa RBRACE
+
+    FLOAT64         shift and go to state 39
+    COMPLEX64       shift and go to state 40
+    INT             shift and go to state 41
+    BOOL            shift and go to state 42
+    STRING          shift and go to state 43
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 50
+    MAP             shift and go to state 51
+
+    valor                          shift and go to state 95
+    expresionesAritmeticas         shift and go to state 44
+    condiciones                    shift and go to state 45
+    estructurasDeDatos             shift and go to state 46
+    expresionAritmetica            shift and go to state 47
+    condicion                      shift and go to state 48
+    mapa                           shift and go to state 49
+
+state 95
+
+    (29) elementoMapa -> valor DOSPUNTOS valor . COMMA
+    (51) expresionAritmetica -> valor . operador valor
+    (62) condicion -> valor . operadorComp valor
+    (53) operador -> . PLUS
+    (54) operador -> . MINUS
+    (55) operador -> . TIMES
+    (56) operador -> . DIVIDE
+    (57) operador -> . MOD
+    (64) operadorComp -> . NOT_EQUAL
+    (65) operadorComp -> . LESS_THAN
+    (66) operadorComp -> . LESS_EQUAL
+    (67) operadorComp -> . GREATER_THAN
+    (68) operadorComp -> . GREATER_EQUAL
+    (69) operadorComp -> . EQUAL
+
+    COMMA           shift and go to state 96
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
+    MOD             shift and go to state 60
+    NOT_EQUAL       shift and go to state 61
+    LESS_THAN       shift and go to state 62
+    LESS_EQUAL      shift and go to state 63
+    GREATER_THAN    shift and go to state 64
+    GREATER_EQUAL   shift and go to state 65
+    EQUAL           shift and go to state 66
+
+    operador                       shift and go to state 54
+    operadorComp                   shift and go to state 55
+
+state 96
+
+    (29) elementoMapa -> valor DOSPUNTOS valor COMMA .
+
+    FLOAT64         reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    COMPLEX64       reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    INT             reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    BOOL            reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    STRING          reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    ID              reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    LPAREN          reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    MAP             reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+    RBRACE          reduce using rule 29 (elementoMapa -> valor DOSPUNTOS valor COMMA .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 47 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 47 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 47 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 47 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 47 resolved as shift
+WARNING: shift/reduce conflict for AND in state 48 resolved as shift
+WARNING: shift/reduce conflict for OR in state 48 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 74 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 74 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 74 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 74 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 74 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 74 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 74 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 74 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 74 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 74 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 74 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 75 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 75 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 75 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 75 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 75 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 75 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 75 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 75 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 75 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 75 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 75 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 83 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 83 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 83 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 83 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 83 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 83 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 83 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 83 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 83 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 83 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 83 resolved as shift
+WARNING: reduce/reduce conflict in state 42 resolved using rule (valor -> BOOL)
+WARNING: rejected rule (condicion -> BOOL) in state 42
+WARNING: reduce/reduce conflict in state 76 resolved using rule (valor -> expresionesAritmeticas)
+WARNING: rejected rule (expresionesAritmeticas -> expresionAritmetica operador expresionesAritmeticas) in state 76
+WARNING: reduce/reduce conflict in state 78 resolved using rule (valor -> condiciones)
+WARNING: rejected rule (condiciones -> condicion conector condiciones) in state 78
+WARNING: reduce/reduce conflict in state 80 resolved using rule (valor -> BOOL)
+WARNING: rejected rule (condicion -> BOOL) in state 80
