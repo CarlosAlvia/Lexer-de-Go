@@ -11,7 +11,11 @@ def p_codigo(p):
               | imprimir
               | mapa
               | array
-              | solicitudDatos''' #TODO
+              | solicitudDatos
+              | slice
+              | for
+              | expresionAritmetica
+              ''' #TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -42,7 +46,10 @@ def p_funcion_anonima_variadico(p): #Angello Bravo
 #ESTRUCTURAS DE CONTROL
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''subcodigo : asignacionCorta
-                  | asignacion''' #TODO
+                  | asignacion
+                  | imprimir
+                  | solicitudDatos
+                  ''' #TODO
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
     '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
@@ -72,8 +79,14 @@ def p_bloqueCasosSwitch(p): #Carlos Alvia
 def p_casoSwitch(p): #Carlos Alvia
     '''casoSwitch : CASE valores DOSPUNTOS subcodigo'''
 
-#def p_for(p): #Angello Bravo
-#    'for : asignacionCorta '
+def p_for(p): #Angello Bravo
+    'for : FOR asignacionCorta SEMICOLON condiciones SEMICOLON autooperacion LBRACE subcodigo RBRACE'
+
+def p_forCondicion(p): #Angello Bravo
+    'for : FOR condiciones LBRACE subcodigo RBRACE'
+
+def p_forInfinito(p): #Angello Bravo
+    'for : FOR LBRACE subcodigo RBRACE'
 
 #ESTRUCTURAS DE DATOS
 
@@ -126,6 +139,17 @@ def p_asignacionInferencia(p): #Carlos Alvia
 
 def p_asignacionCorta(p): #Carlos Alvia
     'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
+
+def p_autoincremento(p): #Angello Bravo
+    'autoincremento : ID PLUS PLUS'
+
+def p_autodecremento(p): #Angello Bravo
+    'autodecremento : ID MINUS MINUS'
+
+def p_autooperacion(p): #Angello Bravo
+    '''autooperacion : autoincremento
+                        | autodecremento
+                        '''
 
 def p_tipoDato(p): #Carlos Alvia 
     '''tipoDato : FLOAT64_TYPE
