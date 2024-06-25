@@ -6,7 +6,8 @@ def p_codigo(p):
     '''codigo : asignacion
               | sentenciaSwitch
               | funcion
-              | imprimir'''#TODO
+              | imprimir
+              | funcionSinArg'''#TODO
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -24,6 +25,10 @@ def p_argumento(p): #Carlos Alvia
 def p_argumentoVariadico(p):
     'argumentoVariadico : ID PUNTO PUNTO PUNTO tipoDato '
     
+#FUNCION SIN ARGUMENTOS 
+def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
+    'funcionSinArg : FUNC ID LPAREN RPAREN LBRACE subcodigo RBRACE'
+
 #ESTRUCTURAS DE CONTROL
 def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''subcodigo : asignacionCorta
@@ -77,13 +82,13 @@ def p_elementoMapa(p): #Carlos Alvia
 
 #DEFINICIÓN DE VARIABLES
 def p_asignacionTipo(p): #Carlos Alvia
-    'asignacion : VAR ID tipoDato EQUAL valor'
+    'asignacion : VAR ID tipoDato ASSIGN valor'
 
 def p_asignacionInferencia(p): #Carlos Alvia
-    'asignacion : VAR ID EQUAL valor'
+    'asignacion : VAR ID ASSIGN valor'
 
 def p_asignacionCorta(p): #Carlos Alvia
-    'asignacionCorta : ID DOSPUNTOS EQUAL valor'
+    'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
 
 def p_tipoDato(p): #Carlos Alvia
     '''tipoDato : FLOAT64_TYPE
@@ -151,7 +156,6 @@ def p_empty(p): #Carlos Alvia
 def p_imprimir(p):
     '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN
                 | FMT PUNTO PRINT_LN LPAREN RPAREN'''
-
 
 # Error rule for syntax errors
 def p_error(p):
