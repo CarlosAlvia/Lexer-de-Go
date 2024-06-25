@@ -1,4 +1,5 @@
 import ply.yacc as yacc
+import logger
 from lexer import tokens
 
 def p_codigo(p):
@@ -147,11 +148,16 @@ def p_empty(p): #Carlos Alvia
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    if p:
+        error_message = f"Error de sintaxis en '{p}'"
+    else:
+        error_message = "Error de sintaxis al final del archivo"
+    sintax_errors.append(error_message)
+    print(error_message)
 
 # Build the parser
 parser = yacc.yacc()
-
+sintax_errors = []
 while True:
    try:
        s = input('lp > ')
@@ -160,3 +166,5 @@ while True:
    if not s: continue
    result = parser.parse(s)
    print(result)
+
+logger.crear_logs(sintax_errors, "AngelloBravo", 1)

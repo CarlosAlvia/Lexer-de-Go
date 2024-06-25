@@ -223,4 +223,4 @@ while True:
         
 
 usuarioGit = 'Angello Bravo'
-logger.crear_logs(tokensList, usuarioGit)
+#logger.crear_logs(tokensList, usuarioGit, 0) Cero para el léxico
