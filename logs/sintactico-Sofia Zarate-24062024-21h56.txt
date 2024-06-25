@@ -1,0 +1,2 @@
+Error de sintaxis en 'LexToken(ID,'C',28,2)'
+Error de sintaxis en 'LexToken(LBRACE,'{',28,9)'

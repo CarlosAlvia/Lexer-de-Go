@@ -1,0 +1,3 @@
+Error de sintaxis en 'LexToken(INT,45,28,12)'
+Error de sintaxis en 'LexToken(INT,45,28,12)'
+Error de sintaxis en 'LexToken(INT,45,28,12)'
