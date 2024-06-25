@@ -1,0 +1,6 @@
+Error de sintaxis en 'LexToken(LBRACE,'{',28,4)'
+Error de sintaxis en 'LexToken(ID,'dacr',28,4)'
+Error de sintaxis en 'LexToken(INT_TYPE,'int',28,13)'
+Error de sintaxis en 'LexToken(ID,'asda',28,13)'
+Error de sintaxis en 'LexToken(INT_TYPE,'int',28,13)'
+Error de sintaxis en 'LexToken(MOD,'%',28,3)'

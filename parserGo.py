@@ -249,4 +249,4 @@ while True:
    result = parser.parse(s)
    print(result)
 
-logger.crear_logs(sintax_errors, "Angello Bravo", 1)
+logger.crear_logs(sintax_errors, "Carlos Alvia", 1)

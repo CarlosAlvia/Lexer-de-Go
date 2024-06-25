@@ -1,0 +1,2 @@
+Error de sintaxis en 'LexToken(STRING_TYPE,'string',28,5)'
+Error de sintaxis en 'LexToken(ID,'f',28,10)'

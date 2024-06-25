@@ -1,0 +1,4 @@
+Error de sintaxis en 'LexToken(ID,'hola',28,6)'
+Error de sintaxis al final del archivo
+Error de sintaxis en 'LexToken(RPAREN,')',28,14)'
+Error de sintaxis en 'LexToken(LBRACE,'{',28,6)'
