@@ -3,7 +3,11 @@ import logger
 from lexer import tokens
 
 def p_codigo(p):
-    '''codigo : asignacion
+    '''codigo : lineaCodigo
+              | lineaCodigo codigo'''
+    
+def p_lineaCodigo(p):
+    '''lineaCodigo : asignacion
               | sentenciaSwitch
               | funcion
               | funcionSinArg
@@ -15,7 +19,7 @@ def p_codigo(p):
               | sentenciaIf
               | slice
               | for
-              | expresionAritmetica''' #TODO
+              | expresionAritmetica'''
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -44,8 +48,13 @@ def p_funcion_anonima_variadico(p): #Angello Bravo
     'funcionAnonima : FUNC LPAREN argumentos RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'
 
 #ESTRUCTURAS DE CONTROL
-def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
-     '''subcodigo : asignacionCorta
+
+def p_subcodigo(p):
+     '''subcodigo : lineaSubcodigo
+                  | lineaSubcodigo subcodigo'''
+     
+def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
+     '''lineaSubcodigo : asignacionCorta
                   | asignacion
                   | imprimir
                   | solicitudDatos
@@ -59,7 +68,7 @@ def p_subcodigo(p): #Se refiere al código que puede ir en un if, for, switch o 
                   | slice
                   | for
                   | expresionAritmetica
-                  ''' #TODO
+                  '''
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
     '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
