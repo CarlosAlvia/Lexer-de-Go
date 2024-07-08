@@ -217,15 +217,61 @@ def p_valor(p): #Carlos Alvia
              | condiciones
              | ID
              | estructurasDeDatos'''
+    if p.slice[1].type == "ID" and p[1] in variables:
+        p[0] = {"tipo": variables[p[1]]["tipo"], "value": variables[p[1]]["value"]}
+    elif p.slice[1].type == "condiciones":
+        p[0] = {"tipo": "BOOL", "value": p[1]}
+    elif p.slice[1].type == "expresionesAritmeticas" or "estructurasDeDatos":
+        p[0] = p[1]
+    else:
+        p[0] = {"tipo": p.slice[1].type, "value": p[1]}
 
 #EXPRESIONES ARITMETICAS
 def p_expresionesAritmeticas(p): #Carlos Alvia 
     '''expresionesAritmeticas : expresionAritmetica
                               | expresionAritmetica operador expresionesAritmeticas'''
+    if len(p) == 2:
+        p[0] = p[1]
 
-def p_expresionAritmetica(p): #Carlos Alvia 
-    '''expresionAritmetica : valor operador valor
-                             | LPAREN valor operador valor RPAREN'''
+def p_expresionAritmeticaPAREN(p):
+    'expresionAritmetica : LPAREN valor operador valor RPAREN'
+
+    if p[2]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
+        if p[4]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
+            #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+            manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[4]['tipo']}",True)
+            
+        else:
+            if p[2]["tipo"] == p[4]["tipo"]:
+                p[0] = p[2]["tipo"]
+                print(p[0])
+            else: 
+                #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+                manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[2]['tipo']} y {p[4]['tipo']}",True)
+    else:
+        #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+        manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[2]['tipo']}",True)   
+
+def p_expresionAritmetica(p): #Carlos Alvia
+    'expresionAritmetica : valor operador valor'
+
+    #Reglas semánticas Carlos Alvia:
+    #Las operaciones aritméticas solo se aplican a valores numéricos 
+    #Los valores a operar deben ser del mismo tipo de dato
+
+    if p[1]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
+        if p[3]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
+            #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+            manejarErrorSemantico(f"Error semántico: La operación {p[2]} no está definida para {p[1]['tipo']}",True)
+        else:
+            if p[1]["tipo"] == p[3]["tipo"]: #Esta es la regla de los tipos distintos
+                p[0] = {"tipo": p[1]["tipo"], "value": 0}
+            else: 
+                #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+                manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[1]['tipo']} y {p[3]['tipo']}",True)
+    else:
+        #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
+        manejarErrorSemantico(f"Error semántico: La operación {p[2]} no está definida para {p[1]['tipo']}",True)  
     
 def p_operador(p): #Carlos Alvia 
     '''operador : PLUS
@@ -233,6 +279,7 @@ def p_operador(p): #Carlos Alvia
                 | TIMES
                 | DIVIDE
                 | MOD'''
+    p[0] = p[1]
 
 #CONDICIONALES
 def p_condiciones(p): #Carlos Alvia 
