@@ -11,6 +11,7 @@ def p_codigo(p):
     
 def p_lineaCodigo(p):
     '''lineaCodigo : declaracion
+              | asignacion
               | sentenciaSwitch
               | funcion
               | funcionSinArg
@@ -59,6 +60,7 @@ def p_subcodigo(p):
      
 def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''lineaSubcodigo : declaracionCorta
+                  | asignacion
                   | declaracion
                   | imprimir
                   | solicitudDatos
@@ -187,7 +189,7 @@ def p_declaracionCorta(p): #Carlos Alvia
         manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",False)
 
 #REGLA SEMANTICA- NO SE PUEDE ASIGNAR VALORES A VARIABLES QUE NO EXISTEN
-def p_asignacion(p): #Carlos Alvia
+def p_asignacion(p): 
     'asignacion : ID ASSIGN valor'
     if p[1] not in variables:
         manejarErrorSemantico(f"Error semántico: la variable {p[1]} no existe",False)
