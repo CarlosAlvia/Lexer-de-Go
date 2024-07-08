@@ -2,6 +2,9 @@ import ply.yacc as yacc
 import logger
 from lexer import tokens
 
+#Diccionario de variables
+variables = {}
+
 def p_codigo(p):
     '''codigo : lineaCodigo
               | lineaCodigo codigo'''
@@ -98,6 +101,7 @@ def p_bloqueCasosSwitch(p): #Carlos Alvia
 def p_casoSwitch(p): #Carlos Alvia
     '''casoSwitch : CASE valores DOSPUNTOS subcodigo'''
 
+
 #IF -Sofia Zarate
 def p_sentenciaIfClasica(p):
     '''sentenciaIf : IF condiciones LBRACE RBRACE
@@ -119,6 +123,7 @@ def p_estructurasDeDatos(p): #Carlos Alvia
                         | array
                         | slice
                         '''
+
 #MAPA
 def p_definicionMapaVacio(p): #Carlos Alvia 
     '''mapa : MAP LBRACKET tipoDato RBRACKET tipoDato LBRACE RBRACE
@@ -155,16 +160,32 @@ def p_sliceArray(p):
 
 
 #DEFINICIÓN DE VARIABLES
+
+#Regla semántica: 
+#Que la variable no haya sido definida previamente -SOFIA ZARATE
+
 def p_asignacionTipo(p): #Carlos Alvia
     'asignacion : VAR ID tipoDato ASSIGN valor'
+    if p[2] not in variables:
+        variables[p[2]] = p[5]
+    else:
+        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", False)
 
 def p_asignacionInferencia(p): #Carlos Alvia
     'asignacion : VAR ID ASSIGN valor'
+    if p[2] not in variables:
+        variables[p[2]] = p[4]
+    else:
+        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", False)
 
 def p_asignacionCorta(p): #Carlos Alvia
     'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
+    if p[1] not in variables:
+        variables[p[1]] = p[4]
+    else:
+        manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",False)
 
-def p_autoincremento(p): #Angello Bravo
+def p_autoincremento(p): #Angello Bravo 
     'autoincremento : ID PLUS PLUS'
 
 def p_autodecremento(p): #Angello Bravo
@@ -196,7 +217,7 @@ def p_valor(p): #Carlos Alvia
              | condiciones
              | ID
              | estructurasDeDatos'''
-    
+
 #EXPRESIONES ARITMETICAS
 def p_expresionesAritmeticas(p): #Carlos Alvia 
     '''expresionesAritmeticas : expresionAritmetica
@@ -212,7 +233,7 @@ def p_operador(p): #Carlos Alvia
                 | TIMES
                 | DIVIDE
                 | MOD'''
-    
+
 #CONDICIONALES
 def p_condiciones(p): #Carlos Alvia 
     '''condiciones : condicion
@@ -256,9 +277,16 @@ def p_error(p):
     sintax_errors.append(error_message)
     print(error_message)
 
+def manejarErrorSemantico(mensaje,terminarPrograma):
+    print(mensaje)
+    semantic_errors.append(mensaje)
+    if(terminarPrograma):
+        exit(-1)
+
 # Build the parser
 parser = yacc.yacc()
 sintax_errors = []
+semantic_errors = []
 while True:
    try:
        s = input('lp > ')
@@ -269,3 +297,4 @@ while True:
    print(result)
 
 logger.crear_logs(sintax_errors, "Carlos Alvia", 1)
+logger.crear_logs(semantic_errors, "Sofía Zárate", 2)
