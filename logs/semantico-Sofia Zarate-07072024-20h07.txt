@@ -1,0 +1,2 @@
+Error semántico: la variable soledad ya ha sido declarada previamente
+Error Semántico: STRING no es un tipo numérico

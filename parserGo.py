@@ -350,5 +350,5 @@ while True:
    result = parser.parse(s)
    print(result)
 
-logger.crear_logs(sintax_errors, "Carlos Alvia", 1)
-logger.crear_logs(semantic_errors, "Carlos Alvia", 2)
+logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
+logger.crear_logs(semantic_errors, "Sofia Zarate", 2)
