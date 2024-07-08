@@ -185,8 +185,14 @@ def p_asignacionCorta(p): #Carlos Alvia
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",False)
 
+#Regla semántica
+#El autoincremento solo es aplicable a variables de tipo numérico
 def p_autoincremento(p): #Angello Bravo 
     'autoincremento : ID PLUS PLUS'
+    if p[1] in variables:
+        if variables[p[1]]["tipo"] not in ("INT", "FLOAT64", "COMPLEX64"):
+            manejarErrorSemantico(f"Error Semántico: {p[1]['tipo']} no es un tipo numérico", False)
+
 
 def p_autodecremento(p): #Angello Bravo
     'autodecremento : ID MINUS MINUS'
