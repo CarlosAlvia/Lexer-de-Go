@@ -1,0 +1,2 @@
+Error Semántico: STRING no es un tipo numérico
+Error semántico: la variable hola ya ha sido declarada previamente

@@ -22,7 +22,8 @@ def p_lineaCodigo(p):
               | sentenciaIf
               | slice
               | for
-              | expresionAritmetica'''
+              | expresionAritmetica
+              | autooperacion'''
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -191,7 +192,7 @@ def p_autoincremento(p): #Angello Bravo
     'autoincremento : ID PLUS PLUS'
     if p[1] in variables:
         if variables[p[1]]["tipo"] not in ("INT", "FLOAT64", "COMPLEX64"):
-            manejarErrorSemantico(f"Error Semántico: {p[1]['tipo']} no es un tipo numérico", False)
+            manejarErrorSemantico(f"Error Semántico: {variables[p[1]]['tipo']} no es un tipo numérico", False)
 
 
 def p_autodecremento(p): #Angello Bravo
@@ -227,7 +228,7 @@ def p_valor(p): #Carlos Alvia
         p[0] = {"tipo": variables[p[1]]["tipo"], "value": variables[p[1]]["value"]}
     elif p.slice[1].type == "condiciones":
         p[0] = {"tipo": "BOOL", "value": p[1]}
-    elif p.slice[1].type == "expresionesAritmeticas" or "estructurasDeDatos":
+    elif p.slice[1].type in ("expresionesAritmeticas","estructurasDeDatos"):
         p[0] = p[1]
     else:
         p[0] = {"tipo": p.slice[1].type, "value": p[1]}
@@ -350,4 +351,4 @@ while True:
    print(result)
 
 logger.crear_logs(sintax_errors, "Carlos Alvia", 1)
-logger.crear_logs(semantic_errors, "Sofía Zárate", 2)
+logger.crear_logs(semantic_errors, "Carlos Alvia", 2)

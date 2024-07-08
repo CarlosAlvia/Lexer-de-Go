@@ -12,7 +12,7 @@ def crear_logs(data, usuarioGit, indexAnalizador):
     nombre_archivo = f'{analizadores[indexAnalizador]}-{usuarioGit}-{fecha_hora}.txt'
     ruta_archivo = os.path.join('logs', nombre_archivo)
 
-    with open(ruta_archivo, 'w') as file:
+    with open(ruta_archivo, 'w', encoding='utf-8') as file:
           for tok in data:
                 file.write(f'{tok}\n')
     print(f'Log creado: {ruta_archivo}')
