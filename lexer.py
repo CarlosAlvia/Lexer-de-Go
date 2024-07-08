@@ -153,7 +153,7 @@ func main(){
     if  entero >= 2 || z != 2.66 {
         var texto string = "Hola Mundo"
         for i := 0; i < 5; i++{
-            entero += i * z / 3
+            entero = entero + i * z / 3
         }
         if z > 20 && z <= 30 {
         return texto;
@@ -201,7 +201,7 @@ func main() {
     if entero > 10 || flotante == 1.23 {
         var cadena string = "Hola Soledad"
         for i := 0; i < 2; i++ {
-            entero += i * int(flotante) / 2
+            entero = entero + (i * int(flotante) / 2)
         }
 
         if flotante <= 5 {
