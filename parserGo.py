@@ -10,7 +10,8 @@ def p_codigo(p):
               | lineaCodigo codigo'''
     
 def p_lineaCodigo(p):
-    '''lineaCodigo : asignacion
+    '''lineaCodigo : declaracion
+              | asignacion
               | sentenciaSwitch
               | funcion
               | funcionSinArg
@@ -58,8 +59,9 @@ def p_subcodigo(p):
                   | lineaSubcodigo subcodigo'''
      
 def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
-     '''lineaSubcodigo : asignacionCorta
+     '''lineaSubcodigo : declaracionCorta
                   | asignacion
+                  | declaracion
                   | imprimir
                   | solicitudDatos
                   | sentenciaSwitch
@@ -78,7 +80,7 @@ def p_sentenciaSwitchClasica(p): #Carlos Alvia
     '''sentenciaSwitch : SWITCH ID LBRACE bloqueCasosSwitch casoDefault RBRACE'''
 
 def p_switchConDefinicionDeVariable(p): #Carlos Alvia 
-    'sentenciaSwitch : SWITCH asignacionCorta SEMICOLON ID LBRACE bloqueCasosSwitch casoDefault RBRACE'
+    'sentenciaSwitch : SWITCH declaracionCorta SEMICOLON ID LBRACE bloqueCasosSwitch casoDefault RBRACE'
 
 def p_switchNoCondicion(p): #Carlos Alvia 
     'sentenciaSwitch : SWITCH LBRACE bloqueCasosBooleanos casoDefault RBRACE'
@@ -107,9 +109,9 @@ def p_casoSwitch(p): #Carlos Alvia
 def p_sentenciaIfClasica(p):
     '''sentenciaIf : IF condiciones LBRACE RBRACE
                     | IF condiciones LBRACE subcodigo RBRACE 
-                    | IF asignacionCorta SEMICOLON condiciones LBRACE subcodigo RBRACE'''
+                    | IF declaracionCorta SEMICOLON condiciones LBRACE subcodigo RBRACE'''
 def p_for(p): #Angello Bravo
-    'for : FOR asignacionCorta SEMICOLON condiciones SEMICOLON autooperacion LBRACE subcodigo RBRACE'
+    'for : FOR declaracionCorta SEMICOLON condiciones SEMICOLON autooperacion LBRACE subcodigo RBRACE'
 
 def p_forCondicion(p): #Angello Bravo
     'for : FOR condiciones LBRACE subcodigo RBRACE'
@@ -165,27 +167,36 @@ def p_sliceArray(p):
 #Regla semántica: 
 #Que la variable no haya sido definida previamente -SOFIA ZARATE
 
-def p_asignacionTipo(p): #Carlos Alvia
-    'asignacion : VAR ID tipoDato ASSIGN valor'
+def p_declaracionTipo(p): #Carlos Alvia
+    'declaracion : VAR ID tipoDato ASSIGN valor'
     if p[2] not in variables:
         tipo = p[3].split("_")[0]
         variables[p[2]] = {"tipo": tipo, "value": p[5]["value"]}
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
-def p_asignacionInferencia(p): #Carlos Alvia
-    'asignacion : VAR ID ASSIGN valor'
+def p_declaracionInferencia(p): #Carlos Alvia
+    'declaracion : VAR ID ASSIGN valor'
     if p[2] not in variables:
         variables[p[2]] = p[4]
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
-def p_asignacionCorta(p): #Carlos Alvia
-    'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
+def p_declaracionCorta(p): #Carlos Alvia
+    'declaracionCorta : ID DOSPUNTOS ASSIGN valor'
     if p[1] not in variables:
         variables[p[1]] = p[4]
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",p.slice[1])
+
+#REGLA SEMANTICA- NO SE PUEDE ASIGNAR VALORES A VARIABLES QUE NO EXISTEN
+def p_asignacion(p): 
+    'asignacion : ID ASSIGN valor'
+    if p[1] not in variables:
+        manejarErrorSemantico(f"Error semántico: la variable {p[1]} no existe",False)
+        variables[p[1]] = p[4]
+    else:
+        variables[p[1]] = p[4]
 
 #Regla semántica
 #El autoincremento solo es aplicable a variables de tipo numérico
