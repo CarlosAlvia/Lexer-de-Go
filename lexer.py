@@ -25,6 +25,8 @@ tokens = (
     'MOD',
     'DOSPUNTOS',
     'ASSIGN',
+    'PLUSPLUS',
+    'MINUSMINUS',
     'EQUAL', #Inicio de los operadores de comparacion
     'NOT_EQUAL',
     'LESS_THAN',
@@ -46,13 +48,10 @@ tokens = (
 ) + ilegalType + tuple(reserved.values())+tuple(dataTypes.values())+tuple(standardFunctions.values())
 
 # Expresiones regulares
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
+
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_MOD = r'%'
+
 t_DOSPUNTOS = r':'
 t_ASSIGN = r'='
 
@@ -75,6 +74,33 @@ t_COMMA = r','
 t_PUNTO = r'\.'
 t_SEMICOLON = r';'
 t_POINTER = r'&'
+
+def t_PLUSPLUS(t):
+    r'\+\+'
+    return t
+
+def t_MINUSMINUS(t): 
+    r'--'
+    return t
+
+def t_PLUS(t): 
+    r'\+'
+    return t
+def t_MINUS(t):
+    r'-'
+    return t
+
+def t_TIMES(t):
+    r'\*'
+    return t
+
+def t_DIVIDE(t):
+    r'/'
+    return t
+
+def t_MOD(t):
+    r'%'
+    return t
 
 def t_BOOL(t):
     r'true|false'
@@ -213,18 +239,5 @@ func main() {
 }
 '''
 
-data = algoritmoAngello
-
-lexer.input(data)
-tokensList = []
-while True:
-        tok = lexer.token()
-        if not tok:
-            break  
-        # print(tok)
-        tokensList.append(tok)
-
-        
-
-usuarioGit = 'Angello Bravo'
+# usuarioGit = 'Angello Bravo'
 #logger.crear_logs(tokensList, usuarioGit, 0) Cero para el léxico

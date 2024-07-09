@@ -168,35 +168,35 @@ def p_sliceArray(p):
 def p_asignacionTipo(p): #Carlos Alvia
     'asignacion : VAR ID tipoDato ASSIGN valor'
     if p[2] not in variables:
-        variables[p[2]] = p[5]
+        tipo = p[3].split("_")[0]
+        variables[p[2]] = {"tipo": tipo, "value": p[5]["value"]}
     else:
-        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", False)
+        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
 def p_asignacionInferencia(p): #Carlos Alvia
     'asignacion : VAR ID ASSIGN valor'
     if p[2] not in variables:
         variables[p[2]] = p[4]
     else:
-        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", False)
+        manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
 def p_asignacionCorta(p): #Carlos Alvia
     'asignacionCorta : ID DOSPUNTOS ASSIGN valor'
     if p[1] not in variables:
         variables[p[1]] = p[4]
     else:
-        manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",False)
+        manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",p.slice[1])
 
 #Regla semántica
 #El autoincremento solo es aplicable a variables de tipo numérico
 def p_autoincremento(p): #Angello Bravo 
-    'autoincremento : ID PLUS PLUS'
+    'autoincremento : ID PLUSPLUS'
     if p[1] in variables:
         if variables[p[1]]["tipo"] not in ("INT", "FLOAT64", "COMPLEX64"):
-            manejarErrorSemantico(f"Error Semántico: {variables[p[1]]['tipo']} no es un tipo numérico", False)
-
+            manejarErrorSemantico(f"Error Semántico: {variables[p[1]]['tipo']} no es un tipo numérico", p.slice[1])
 
 def p_autodecremento(p): #Angello Bravo
-    'autodecremento : ID MINUS MINUS'
+    'autodecremento : ID MINUSMINUS'
 
 def p_autooperacion(p): #Angello Bravo
     '''autooperacion : autoincremento
@@ -209,6 +209,7 @@ def p_tipoDato(p): #Carlos Alvia
                   | INT_TYPE
                   | BOOL_TYPE
                   | STRING_TYPE'''
+    p[0] = p.slice[1].type
     
 def p_valores(p): #Carlos Alvia 
     '''valores : valor
@@ -242,22 +243,24 @@ def p_expresionesAritmeticas(p): #Carlos Alvia
 
 def p_expresionAritmeticaPAREN(p):
     'expresionAritmetica : LPAREN valor operador valor RPAREN'
-
-    if p[2]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
-        if p[4]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
-            #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-            manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[4]['tipo']}",True)
+    try:
+        if p[2]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
+            if p[4]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
+        
+                manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[4]['tipo']}",p[3])
+                
+            else:
+                if p[2]["tipo"] == p[4]["tipo"]:
+                    p[0] = p[2]["tipo"]
+                else: 
             
+                    manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[2]['tipo']} y {p[4]['tipo']}",p[3])
         else:
-            if p[2]["tipo"] == p[4]["tipo"]:
-                p[0] = p[2]["tipo"]
-                print(p[0])
-            else: 
-                #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-                manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[2]['tipo']} y {p[4]['tipo']}",True)
-    else:
-        #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-        manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[2]['tipo']}",True)   
+    
+            manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[2]['tipo']}",p[3])   
+    except Exception as e:
+        pass
+
 
 def p_expresionAritmetica(p): #Carlos Alvia
     'expresionAritmetica : valor operador valor'
@@ -265,28 +268,29 @@ def p_expresionAritmetica(p): #Carlos Alvia
     #Reglas semánticas Carlos Alvia:
     #Las operaciones aritméticas solo se aplican a valores numéricos 
     #Los valores a operar deben ser del mismo tipo de dato
-
-    if p[1]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
-        if p[3]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
-            #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-            manejarErrorSemantico(f"Error semántico: La operación {p[2]} no está definida para {p[1]['tipo']}",True)
+    try:
+        if p[1]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
+            if p[3]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
+        
+                manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[3]['tipo']}",p[2])
+            else:
+                if p[1]["tipo"] == p[3]["tipo"]: #Esta es la regla de los tipos distintos
+                    p[0] = {"tipo": p[1]["tipo"], "value": 0}
+                else: 
+                    manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[1]['tipo']} y {p[3]['tipo']}",p[2])
+                    
         else:
-            if p[1]["tipo"] == p[3]["tipo"]: #Esta es la regla de los tipos distintos
-                p[0] = {"tipo": p[1]["tipo"], "value": 0}
-            else: 
-                #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-                manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[1]['tipo']} y {p[3]['tipo']}",True)
-    else:
-        #Se termina el programa porque esta operación no genera un valor y luego el programa se caería por ello
-        manejarErrorSemantico(f"Error semántico: La operación {p[2]} no está definida para {p[1]['tipo']}",True)  
-    
+            manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[1]['tipo']}",p[2])
+    except Exception as e:
+        pass
+
 def p_operador(p): #Carlos Alvia 
-    '''operador : PLUS
+    '''operador : PLUS 
                 | MINUS
                 | TIMES
                 | DIVIDE
                 | MOD'''
-    p[0] = p[1]
+    p[0] = p.slice[1]
 
 #CONDICIONALES
 def p_condiciones(p): #Carlos Alvia 
@@ -322,33 +326,61 @@ def p_imprimir(p):
 def p_solicitud_datos(p): 
     'solicitudDatos : FMT PUNTO SCANLN LPAREN POINTER ID RPAREN'
 
-# Error rule for syntax errors
+
 def p_error(p):
     if p:
-        error_message = f"Error de sintaxis en '{p}'"
+        line_start = p.lexer.lexdata.rfind('\n', 0, p.lexpos) + 1
+        line_end = p.lexer.lexdata.find('\n', p.lexpos)
+        if line_end == -1:
+            line_end = len(p.lexer.lexdata)
+        
+        line_content = p.lexer.lexdata[line_start:line_end]
+        
+        token_position = p.lexpos - line_start
+        
+        error_message = f"Error de sintaxis en la línea:\n"
+        error_message += f"{line_content.strip()}\n"
+        error_message += f"Token inesperado: '{p.value}' \n"
     else:
         error_message = "Error de sintaxis al final del archivo"
+    
     sintax_errors.append(error_message)
-    print(error_message)
 
-def manejarErrorSemantico(mensaje,terminarPrograma):
-    print(mensaje)
-    semantic_errors.append(mensaje)
-    if(terminarPrograma):
-        exit(-1)
+def manejarErrorSemantico(mensaje, token):
+    line_start = token.lexer.lexdata.rfind('\n', 0, token.lexpos) + 1
+    line_end = token.lexer.lexdata.find('\n', token.lexpos)
+    if line_end == -1:
+        line_end = len(token.lexer.lexdata)
+    
+    line_content = token.lexer.lexdata[line_start:line_end]
+    
+    error_message = f"Error Semántico en la línea:\n"
+    error_message += f"{line_content.strip()}\n"
+    error_message += mensaje
+    semantic_errors.append(error_message)
+
 
 # Build the parser
 parser = yacc.yacc()
 sintax_errors = []
 semantic_errors = []
-while True:
-   try:
-       s = input('lp > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
+def parse_input(data):
+    variables.clear()
+    sintax_errors.clear()
+    parser.parse(data)
+    if sintax_errors:
+        return '\n'.join(sintax_errors)
+    else:
+        return "No hay errores sintácticos"
+    
+def parse_semantic(data):
+    variables.clear()
+    semantic_errors.clear()
+    parser.parse(data)
+    if semantic_errors:
+        return '\n'.join(semantic_errors)
+    else:
+        return "No hay errores semánticos"
 
 logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
 logger.crear_logs(semantic_errors, "Sofia Zarate", 2)
