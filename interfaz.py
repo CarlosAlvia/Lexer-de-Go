@@ -4,14 +4,7 @@ import lexer
 import parserGo
 
 def analisis_lexico(data):
-    lexer.lexer.input(data)
-    resultado = []
-    while True:
-        tok = lexer.lexer.token()
-        if not tok:
-            break
-        resultado.append(f"{tok.type}: {tok.value} (linea {tok.lineno}, posicion {tok.lexpos})")
-    return '\n'.join(resultado)
+    return lexer.lex_input(data)
 
 def analisis_semantico(data):
     resultado = parserGo.parse_semantic(data)
@@ -30,6 +23,7 @@ def importar_archivo():
             codigo_fuente.insert(tk.END, file.read())
 
 def ejecutar_analisis(tipo):
+    output.config(state=tk.NORMAL)
     codigo = codigo_fuente.get('1.0', tk.END)
     if tipo == "lexico":
         resultado = analisis_lexico(codigo)
@@ -40,6 +34,7 @@ def ejecutar_analisis(tipo):
     output.delete('1.0', tk.END)
     if resultado:  
         output.insert(tk.END, resultado)
+        output.config(state=tk.DISABLED)
 
 ventana = tk.Tk()
 ventana.title("Analizador de Código")
@@ -76,5 +71,6 @@ label_output.grid(row=4, column=0, columnspan=3, padx=10, pady=5, sticky='w')
 
 output = scrolledtext.ScrolledText(ventana, width=80, height=10, bg='white', fg='black')
 output.grid(row=5, column=0, columnspan=3, padx=10, pady=10)
+
 
 ventana.mainloop()

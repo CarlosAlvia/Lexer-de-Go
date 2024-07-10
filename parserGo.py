@@ -8,14 +8,14 @@ variables = {}
 def p_codigo(p):
     '''codigo : lineaCodigo
               | lineaCodigo codigo'''
-    
+
 def p_lineaCodigo(p):
-    '''lineaCodigo : declaracion
-              | asignacion
-              | sentenciaSwitch
-              | funcion
+    '''lineaCodigo : sentenciaSwitch
               | funcionSinArg
+              | funcion
               | funcionAnonima
+              | asignacion
+              | declaracion
               | imprimir
               | mapa
               | array
@@ -25,6 +25,10 @@ def p_lineaCodigo(p):
               | for
               | expresionAritmetica
               | autooperacion'''
+
+#FUNCION SIN ARGUMENTOS 
+def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
+    'funcionSinArg : FUNC ID LPAREN RPAREN LBRACE subcodigo RBRACE'
 
 #TIPOS DE FUNCION
 def p_funcion(p): #con argumentos o variádica #Carlos Alvia
@@ -42,9 +46,7 @@ def p_argumento(p): #Carlos Alvia
 def p_argumentoVariadico(p):
     'argumentoVariadico : ID PUNTO PUNTO PUNTO tipoDato '
     
-#FUNCION SIN ARGUMENTOS 
-def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
-    'funcionSinArg : FUNC ID LPAREN RPAREN LBRACE subcodigo RBRACE'
+
 
 def p_funcion_anonima(p):  #Angello Bravo
     '''funcionAnonima : FUNC LPAREN RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'''
@@ -57,6 +59,7 @@ def p_funcion_anonima_variadico(p): #Angello Bravo
 def p_subcodigo(p):
      '''subcodigo : lineaSubcodigo
                   | lineaSubcodigo subcodigo'''
+
      
 def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, switch o una función Carlos Alvia
      '''lineaSubcodigo : declaracionCorta
@@ -65,8 +68,8 @@ def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, swit
                   | imprimir
                   | solicitudDatos
                   | sentenciaSwitch
-                  | funcion
                   | funcionSinArg
+                  | funcion
                   | funcionAnonima
                   | mapa
                   | array
@@ -74,6 +77,7 @@ def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, swit
                   | slice
                   | for
                   | expresionAritmetica
+                  | autooperacion
                   '''
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 
@@ -168,7 +172,7 @@ def p_sliceArray(p):
 #Que la variable no haya sido definida previamente -SOFIA ZARATE
 
 def p_declaracionTipo(p): #Carlos Alvia
-    'declaracion : VAR ID tipoDato ASSIGN valor'
+    'declaracion : VAR ID tipoDato ASSIGN valorDeclaracion'
     if p[2] not in variables:
         tipo = p[3].split("_")[0]
         variables[p[2]] = {"tipo": tipo, "value": p[5]["value"]}
@@ -176,27 +180,28 @@ def p_declaracionTipo(p): #Carlos Alvia
         manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
 def p_declaracionInferencia(p): #Carlos Alvia
-    'declaracion : VAR ID ASSIGN valor'
+    'declaracion : VAR ID ASSIGN valorDeclaracion'
     if p[2] not in variables:
         variables[p[2]] = p[4]
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[2]} ya ha sido declarada previamente", p.slice[1])
 
+
 def p_declaracionCorta(p): #Carlos Alvia
-    'declaracionCorta : ID DOSPUNTOS ASSIGN valor'
+    'declaracionCorta : ID DOSPUNTOS ASSIGN valorDeclaracion'
     if p[1] not in variables:
         variables[p[1]] = p[4]
     else:
         manejarErrorSemantico(f"Error semántico: la variable {p[1]} ya ha sido declarada previamente",p.slice[1])
 
+
 #REGLA SEMANTICA- NO SE PUEDE ASIGNAR VALORES A VARIABLES QUE NO EXISTEN
 def p_asignacion(p): 
-    'asignacion : ID ASSIGN valor'
+    'asignacion : ID ASSIGN valorDeclaracion'
     if p[1] not in variables:
-        manejarErrorSemantico(f"Error semántico: la variable {p[1]} no existe",False)
-        variables[p[1]] = p[4]
+        manejarErrorSemantico(f"Error semántico: la variable {p[1]} no existe",p.slice[1])
     else:
-        variables[p[1]] = p[4]
+        variables[p[1]] = p[3]
 
 #Regla semántica
 #El autoincremento solo es aplicable a variables de tipo numérico
@@ -226,6 +231,14 @@ def p_valores(p): #Carlos Alvia
     '''valores : valor
                | valor COMMA valores''' 
     
+def p_valorDeclaracion(p):
+    '''valorDeclaracion : valor
+                        | condiciones'''
+    if p.slice[1].type == "condiciones":
+        p[0] = {"tipo": "BOOL", "value": p[1]}
+    else:
+        p[0] = p[1]
+    
 def p_valor(p): #Carlos Alvia 
     '''valor : FLOAT64
              | COMPLEX64
@@ -233,75 +246,14 @@ def p_valor(p): #Carlos Alvia
              | BOOL
              | STRING
              | expresionesAritmeticas
-             | condiciones
              | ID
              | estructurasDeDatos'''
     if p.slice[1].type == "ID" and p[1] in variables:
         p[0] = {"tipo": variables[p[1]]["tipo"], "value": variables[p[1]]["value"]}
-    elif p.slice[1].type == "condiciones":
-        p[0] = {"tipo": "BOOL", "value": p[1]}
     elif p.slice[1].type in ("expresionesAritmeticas","estructurasDeDatos"):
         p[0] = p[1]
     else:
         p[0] = {"tipo": p.slice[1].type, "value": p[1]}
-
-#EXPRESIONES ARITMETICAS
-def p_expresionesAritmeticas(p): #Carlos Alvia 
-    '''expresionesAritmeticas : expresionAritmetica
-                              | expresionAritmetica operador expresionesAritmeticas'''
-    if len(p) == 2:
-        p[0] = p[1]
-
-def p_expresionAritmeticaPAREN(p):
-    'expresionAritmetica : LPAREN valor operador valor RPAREN'
-    try:
-        if p[2]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
-            if p[4]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
-        
-                manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[4]['tipo']}",p[3])
-                
-            else:
-                if p[2]["tipo"] == p[4]["tipo"]:
-                    p[0] = p[2]["tipo"]
-                else: 
-            
-                    manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[2]['tipo']} y {p[4]['tipo']}",p[3])
-        else:
-    
-            manejarErrorSemantico(f"Error semántico: La operación {p[3]} no está definida para {p[2]['tipo']}",p[3])   
-    except Exception as e:
-        pass
-
-
-def p_expresionAritmetica(p): #Carlos Alvia
-    'expresionAritmetica : valor operador valor'
-
-    #Reglas semánticas Carlos Alvia:
-    #Las operaciones aritméticas solo se aplican a valores numéricos 
-    #Los valores a operar deben ser del mismo tipo de dato
-    try:
-        if p[1]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
-            if p[3]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
-        
-                manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[3]['tipo']}",p[2])
-            else:
-                if p[1]["tipo"] == p[3]["tipo"]: #Esta es la regla de los tipos distintos
-                    p[0] = {"tipo": p[1]["tipo"], "value": 0}
-                else: 
-                    manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[1]['tipo']} y {p[3]['tipo']}",p[2])
-                    
-        else:
-            manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[1]['tipo']}",p[2])
-    except Exception as e:
-        pass
-
-def p_operador(p): #Carlos Alvia 
-    '''operador : PLUS 
-                | MINUS
-                | TIMES
-                | DIVIDE
-                | MOD'''
-    p[0] = p.slice[1]
 
 #CONDICIONALES
 def p_condiciones(p): #Carlos Alvia 
@@ -324,6 +276,54 @@ def p_operadorComparacion(p): #Carlos Alvia
                     | GREATER_EQUAL
                     | EQUAL'''
     
+#EXPRESIONES ARITMETICAS
+def p_expresionesAritmeticas(p): #Carlos Alvia 
+    '''expresionesAritmeticas : expresionAritmeticaGeneral
+                              | expresionAritmeticaGeneral operador expresionesAritmeticas'''
+    p[0] = p[1]
+
+def p_expresionAritmeticaGeneral(p):
+    '''expresionAritmeticaGeneral : expresionAritmetica
+                                  | expresionAritmeticaParen'''
+    p[0]=p[1]
+
+def p_expresionAritmeticaParen(p):
+    'expresionAritmeticaParen : LPAREN expresionAritmetica RPAREN'
+    p[0] = p[2]
+
+def p_expresionAritmetica(p): #Carlos Alvia
+    'expresionAritmetica : valor operador valor'
+
+    #Reglas semánticas Carlos Alvia:
+    #Las operaciones aritméticas solo se aplican a valores numéricos 
+    #Los valores a operar deben ser del mismo tipo de dato
+    try:
+        if p[1]["tipo"] in ["FLOAT64","INT","COMPLEX64"]:
+            if p[3]["tipo"] not in ["FLOAT64","INT","COMPLEX64"]:
+                p[0] = {"tipo": "invalido", "value": 0}
+                manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[3]['tipo']}",p[2])
+            else:
+                if p[1]["tipo"] == p[3]["tipo"]: #Esta es la regla de los tipos distintos
+                    p[0] = {"tipo": p[1]["tipo"], "value": 0}
+                else: 
+                    p[0] = {"tipo": "invalido", "value": 0}
+                    manejarErrorSemantico(f"Error semántico: Tipos de datos no coincidentes {p[1]['tipo']} y {p[3]['tipo']}",p[2])
+                    
+        else:
+            manejarErrorSemantico(f"Error semántico: La operación {p[2].value} no está definida para {p[1]['tipo']}",p[2])
+    except Exception as e:
+        pass
+
+def p_operador(p): #Carlos Alvia 
+    '''operador : PLUS 
+                | MINUS
+                | TIMES
+                | DIVIDE
+                | MOD'''
+    p[0] = p.slice[1]
+
+
+    
 def p_empty(p): #Carlos Alvia
     'empty :'
     pass
@@ -336,7 +336,6 @@ def p_imprimir(p):
 # Solicitar datos por teclado Angello Bravo
 def p_solicitud_datos(p): 
     'solicitudDatos : FMT PUNTO SCANLN LPAREN POINTER ID RPAREN'
-
 
 def p_error(p):
     if p:
@@ -393,5 +392,5 @@ def parse_semantic(data):
     else:
         return "No hay errores semánticos"
 
-logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
-logger.crear_logs(semantic_errors, "Sofia Zarate", 2)
+#logger.crear_logs(sintax_errors, "Sofia Zarate", 1)
+#logger.crear_logs(semantic_errors, "Sofia Zarate", 2)
