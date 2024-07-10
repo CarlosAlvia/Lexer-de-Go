@@ -24,7 +24,8 @@ def p_lineaCodigo(p):
               | slice
               | for
               | expresionAritmetica
-              | autooperacion'''
+              | autooperacion
+              | llamarFuncion'''
 
 #FUNCION SIN ARGUMENTOS 
 def p_funcionSinArg(p): #funcion sin argumentos Sofia Zarate
@@ -46,7 +47,11 @@ def p_argumento(p): #Carlos Alvia
 def p_argumentoVariadico(p):
     'argumentoVariadico : ID PUNTO PUNTO PUNTO tipoDato '
     
+def p_llamarFuncion(p):
+    '''llamarFuncion : ID LPAREN RPAREN'''
 
+def p_llamarFuncionArgumentos(p):
+    '''llamarFuncion : ID LPAREN valores RPAREN'''
 
 def p_funcion_anonima(p):  #Angello Bravo
     '''funcionAnonima : FUNC LPAREN RPAREN LBRACE subcodigo RBRACE LPAREN RPAREN'''
@@ -78,6 +83,7 @@ def p_lineaSubcodigo(p): #Se refiere al código que puede ir en un if, for, swit
                   | for
                   | expresionAritmetica
                   | autooperacion
+                  | llamarFuncion
                   '''
 
 def p_sentenciaSwitchClasica(p): #Carlos Alvia 

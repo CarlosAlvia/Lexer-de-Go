@@ -12,4 +12,6 @@ func algoritmo(){
         complejo++
 
     }
+    funci()
+    funcion(2,3,13,3)
 }
