@@ -89,6 +89,14 @@ def t_INT(t):
     t.value = int(t.value)
     return t
 
+def t_BOOL(t):
+    r'true|false'
+    if(t == 'true'):
+        t.value = True
+    else: 
+        t.value = False
+    return t
+
 def t_ID(t):
     r'[_a-zA-Z]\w*'
     t.type = reserved.get(t.value,"ID")
@@ -127,14 +135,6 @@ def t_DIVIDE(t):
 
 def t_MOD(t):
     r'%'
-    return t
-
-def t_BOOL(t):
-    r'true|false'
-    if(t == 'true'):
-        t.value = True
-    else: 
-        t.value = False
     return t
 
 def t_STRING(t):

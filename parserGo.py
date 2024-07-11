@@ -336,8 +336,7 @@ def p_empty(p): #Carlos Alvia
 
 #Impresión con cero, uno o más argumentos Sofia Zarate
 def p_imprimir(p):
-    '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN
-                | FMT PUNTO PRINT_LN LPAREN RPAREN'''
+    '''imprimir : FMT PUNTO PRINT_LN LPAREN valores RPAREN'''
 
 # Solicitar datos por teclado Angello Bravo
 def p_solicitud_datos(p): 
